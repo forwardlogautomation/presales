@@ -107,7 +107,8 @@ tr.check td{background:var(--warn-bg)}
 .bc b{font-size:14px}.bc .muted{font-size:12px}.bc .chips{margin-top:5px}.bc .clock{font-size:11.5px;color:var(--grey);margin-top:5px}
 .bc .na{font-size:12.5px;margin-top:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 main.wide{max-width:none}
-.fbar{flex-wrap:nowrap;overflow-x:auto;margin:0 0 10px;padding-bottom:4px}.fbar button{white-space:nowrap;flex:none}</style>
+.fbar{flex-wrap:nowrap;overflow-x:auto;margin:0 0 10px;padding-bottom:4px;scrollbar-width:none}.fbar::-webkit-scrollbar{display:none}.fbar button{white-space:nowrap;flex:none}
+@media (max-width:700px){.board{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(84vw,340px);scroll-snap-type:x mandatory;margin:0 -12px;padding:0 12px 12px;scroll-padding:0 12px}.bcol{scroll-snap-align:start}}</style>
 </head><body>
 <header class="top">
   <img class="logo" alt="Forwardlog" src="">
@@ -252,7 +253,7 @@ function ago(n) { return n === null || n === undefined ? '' : (n === 0 ? 'today'
 function footerHtml() { return '<footer class="tag"><b>FORWARDLOG</b> \u00b7 Endless Flexibility In Automation</footer>'; }
 </script>
 <script>
-var S = { projects: [], cfg: null, tab: 'plate', q: '', stageF: '', flagOnly: false, cur: null, f: '', view: ['stage', 'board'].indexOf(ls('pp_view')) >= 0 ? ls('pp_view') : 'status' };
+var S = { projects: [], cfg: null, tab: 'plate', q: '', stageF: '', flagOnly: false, cur: null, fs: loadFs(), view: ls('pp_view') === 'board' ? 'board' : 'list' };
 function stageName(n) { return S.cfg.stages[n]; }
 function loadCfg() { return S.cfg ? Promise.resolve(S.cfg) : api('getConfig').then(function (c) { S.cfg = c; if (c.isAdmin) $('#adminlink').classList.remove('hidden'); return c; }); }
 
@@ -266,21 +267,6 @@ function showList() {
   api('listProjects').then(function (r) { S.projects = r.projects; S.cfg = r.config; if (r.config.isAdmin) $('#adminlink').classList.remove('hidden'); renderList(); })
     .catch(function (e) { $('#main').innerHTML = '<div class="empty">' + esc(e.message) + '</div>'; toast(e.message, true); });
 }
-function buckets() {
-  var b = { plate: [], sales: [], client: [], internal: [], hold: [] };
-  S.projects.forEach(function (p) {
-    if (p.stage === 6) return;
-    if (p.onHold) b.hold.push(p); else if (p.ball === 'Me') b.plate.push(p); else if (p.ball === 'Sales') b.sales.push(p); else if (p.ball === 'Client') b.client.push(p); else b.internal.push(p);
-  });
-  return b;
-}
-function sortList(a) {
-  return a.slice().sort(function (x, y) {
-    var fx = x.flags.length ? 0 : 1, fy = y.flags.length ? 0 : 1; if (fx !== fy) return fx - fy;
-    var dx = x.daysInStage === null ? -1 : x.daysInStage, dy = y.daysInStage === null ? -1 : y.daysInStage; if (dx !== dy) return dy - dx;
-    return x.client.localeCompare(y.client);
-  });
-}
 function clockText(p) {
   if (p.stage === 6) return 'Handed over' + (p.stageDate ? ' ' + fmtDate(p.stageDate) : '');
   if (p.onHold) return 'On hold ' + ago(p.daysOnHold) + (p.holdReason ? ' \u00b7 ' + esc(p.holdReason) : '');
@@ -289,7 +275,7 @@ function clockText(p) {
   return (p.daysInStage === null ? 'No stage date' : ago(p.daysInStage) + ' in stage') + (p.estimated ? ' (est.)' : '');
 }
 function cardHtml(p) {
-  var chips = '<span class="chip brand">' + esc(p.stage + ' ' + p.stageName) + '</span>';
+  var chips = '';
   if (p.stage === 5 && p.step) chips += '<span class="chip ' + (p.step === 'Presented' ? 'info' : 'warn') + '">' + (p.step === 'Presented' ? 'Presented' : 'Pending to present') + '</span>';
   if (p.onHold) chips += '<span class="chip">On hold</span>'; else chips += waitChip(p);
   if (p.solutionRev > 1) chips += '<span class="chip">v' + p.solutionRev + '</span>';
@@ -298,22 +284,35 @@ function cardHtml(p) {
   return '<li class="pj w-' + waitClass(p) + '" data-id="' + esc(p.id) + '"><div class="main"><div class="t1"><b>' + esc(p.client) + '</b> <span class="muted">' + esc(p.solution) + (p.projectId ? ' \u00b7 #' + esc(p.projectId) : '') + '</span></div><div class="chips">' + chips + '</div><div class="clock">' + clockText(p) + '</div>' + (na ? '<div class="na">' + (p.nextAction ? 'Next: ' : '') + esc(na) + '</div>' : '') + '</div>' +
     (p.stage < 6 ? '<button class="btn sm sec mv" data-id="' + esc(p.id) + '">Move</button>' : '') + '</li>';
 }
-function switchHtml() { return '<div class="seg viewsw">' + [['status', 'By status'], ['stage', 'By stage'], ['board', 'Board']].map(function (v) { return '<button data-view="' + v[0] + '" class="' + (S.view === v[0] ? 'on' : '') + '">' + v[1] + '</button>'; }).join('') + '</div>'; }
-function bindSwitch() { $$('.viewsw button').forEach(function (b) { b.onclick = function () { S.view = b.dataset.view; ls('pp_view', S.view); renderList(); }; }); }
-var FILTERS = [['', 'All'], ['me', 'My plate'], ['sales', 'Sales'], ['client', 'Client'], ['internal', 'Internal'], ['hold', 'On hold'], ['pending', 'Pending to present'], ['presented', 'Presented']];
-function matchF(p, f) {
-  f = f === undefined ? S.f : f; if (!f) return true; if (p.stage === 6) return false;
+var FILTERS = [['me', 'My plate'], ['sales', 'Sales'], ['client', 'Client'], ['internal', 'Internal'], ['hold', 'On hold'], ['pending', 'Pending to present'], ['presented', 'Presented']];
+function loadFs() {
+  try { var a = JSON.parse(ls('pp_filters') || '[]'); return Array.isArray(a) ? a.filter(function (x) { return ['me', 'sales', 'client', 'internal', 'hold', 'pending', 'presented'].indexOf(x) >= 0; }) : []; } catch (e) { return []; }
+}
+function matchOne(p, f) {
+  if (p.stage === 6) return false;
   if (f === 'hold') return !!p.onHold; if (p.onHold) return false;
   if (f === 'me') return p.ball === 'Me'; if (f === 'sales') return p.ball === 'Sales'; if (f === 'client') return p.ball === 'Client';
   if (f === 'internal') return p.ball === 'Internal' || p.ball === 'Other';
   if (f === 'pending') return p.stage === 5 && p.step !== 'Presented';
   if (f === 'presented') return p.stage === 5 && p.step === 'Presented';
-  return true;
+  return false;
 }
+function matchF(p) { return !S.fs.length || S.fs.some(function (f) { return matchOne(p, f); }); }
 function filterBar(live) {
-  return '<div class="chipsel fbar">' + FILTERS.map(function (x) { var n = x[0] ? live.filter(function (p) { return matchF(p, x[0]); }).length : live.length; return '<button data-f="' + x[0] + '" class="' + (S.f === x[0] ? 'on' : '') + '">' + x[1] + ' (' + n + ')</button>'; }).join('') + '</div>';
+  return '<div class="chipsel fbar"><button data-f="" class="' + (S.fs.length ? '' : 'on') + '">All (' + live.length + ')</button>' + FILTERS.map(function (x) { return '<button data-f="' + x[0] + '" class="' + (S.fs.indexOf(x[0]) >= 0 ? 'on' : '') + '">' + x[1] + ' (' + live.filter(function (p) { return matchOne(p, x[0]); }).length + ')</button>'; }).join('') + '</div>';
 }
-function bindFilter(m) { $$('.fbar button', m).forEach(function (b) { b.onclick = function () { S.f = b.dataset.f === S.f ? '' : b.dataset.f; renderList(); }; }); }
+function bindFilter(m) {
+  $$('.fbar button', m).forEach(function (b) {
+    b.onclick = function () {
+      var f = b.dataset.f, keep = b.parentNode.scrollLeft;
+      if (!f) S.fs = []; else { var i = S.fs.indexOf(f); if (i >= 0) S.fs.splice(i, 1); else S.fs.push(f); }
+      ls('pp_filters', JSON.stringify(S.fs)); renderList();
+      var nb = $('.fbar'); if (nb) nb.scrollLeft = keep;
+    };
+  });
+}
+function switchHtml() { return '<div class="seg viewsw">' + [['list', 'List'], ['board', 'Board']].map(function (v) { return '<button data-view="' + v[0] + '" class="' + (S.view === v[0] ? 'on' : '') + '">' + v[1] + '</button>'; }).join('') + '</div>'; }
+function bindSwitch() { $$('.viewsw button').forEach(function (b) { b.onclick = function () { S.view = b.dataset.view; ls('pp_view', S.view); renderList(); }; }); }
 function sortStage(a) {
   return a.slice().sort(function (x, y) {
     if (x.onHold !== y.onHold) return x.onHold ? 1 : -1;
@@ -324,18 +323,15 @@ function sortStage(a) {
 }
 function renderList() {
   $('#main').classList.toggle('wide', S.view === 'board');
-  if (S.view === 'board') { renderListBoard(); return; }
-  if (S.view === 'stage') { renderListStage(); return; }
-  renderListStatus();
-  $('#main').insertAdjacentHTML('afterbegin', switchHtml()); bindSwitch();
+  if (S.view === 'board') renderListBoard(); else renderListStage();
 }
 function renderListStage() {
   var q = S.q.trim().toLowerCase(), live = S.projects.filter(function (p) { return p.stage < 6; }), done = S.projects.filter(function (p) { return p.stage === 6; });
   var flagged = live.filter(function (p) { return p.flags.length; }).length, held = live.filter(function (p) { return p.onHold; }).length;
   function ok(p) { return (!q || (p.client + ' ' + p.solution + ' ' + p.projectId + ' ' + p.salesPic).toLowerCase().indexOf(q) >= 0) && (!S.flagOnly || p.flags.length) && matchF(p); }
   function items(arr) { return arr.length ? '<ul class="list">' + sortStage(arr).map(cardHtml).join('') + '</ul>' : '<div class="secnone">None</div>'; }
-  var h = switchHtml() + filterBar(live) + '<div class="card"><div class="stats">' + [1, 2, 3, 4, 5].map(function (n) { return '<button class="stat" data-sec="' + n + '"><b>' + live.filter(function (p) { return p.stage === n; }).length + '</b><span>' + ({ 1: 'Data coll.', 2: 'Data analysis', 3: 'Solution design', 4: 'Proposal design', 5: 'Proposal stage' }[n]) + '</span></button>'; }).join('') + '</div>' +
-    '<div class="muted" style="margin-top:10px">' + live.length + ' live projects \u00b7 ' + held + ' on hold \u00b7 ' + (flagged ? flagged + ' flagged' : 'nothing flagged') + '</div></div>';
+  var h = switchHtml() + '<div class="card"><div class="stats">' + [1, 2, 3, 4, 5].map(function (n) { return '<button class="stat" data-sec="' + n + '"><b>' + live.filter(function (p) { return p.stage === n; }).length + '</b><span>' + ({ 1: 'Data coll.', 2: 'Data analysis', 3: 'Solution design', 4: 'Proposal design', 5: 'Proposal stage' }[n]) + '</span></button>'; }).join('') + '</div>' +
+    '<div class="muted" style="margin-top:10px">' + live.length + ' live projects \u00b7 ' + held + ' on hold \u00b7 ' + (flagged ? flagged + ' flagged' : 'nothing flagged') + '</div></div>' + filterBar(live);
   h += '<div class="toolbar"><input id="q" type="search" placeholder="Search client, solution or project ID" value="' + esc(S.q) + '"><label class="toggle"><input type="checkbox" id="fo"' + (S.flagOnly ? ' checked' : '') + '> Flagged only (' + flagged + ')</label></div>';
   [1, 2, 3, 4].forEach(function (n) {
     var arr = live.filter(function (p) { return p.stage === n && ok(p); });
@@ -369,7 +365,8 @@ function renderListBoard() {
   var flagged = live.filter(function (p) { return p.flags.length; }).length, held = live.filter(function (p) { return p.onHold; }).length;
   function ok(p) { return (!q || (p.client + ' ' + p.solution + ' ' + p.projectId + ' ' + p.salesPic).toLowerCase().indexOf(q) >= 0) && (!S.flagOnly || p.flags.length) && matchF(p); }
   function cards(arr) { return arr.length ? sortStage(arr).map(boardCard).join('') : '<div class="secnone">None</div>'; }
-  var h = switchHtml() + filterBar(live) + '<div class="muted" style="margin:0 2px 10px">' + live.length + ' live projects \u00b7 ' + held + ' on hold \u00b7 ' + (flagged ? flagged + ' flagged' : 'nothing flagged') + ' \u00b7 on a laptop, drag a card to another stage to move it</div>';
+  var touch = window.matchMedia && matchMedia('(hover: none)').matches;
+  var h = switchHtml() + filterBar(live) + '<div class="muted" style="margin:0 2px 10px">' + live.length + ' live projects \u00b7 ' + held + ' on hold \u00b7 ' + (flagged ? flagged + ' flagged' : 'nothing flagged') + ' \u00b7 ' + (touch ? 'swipe sideways to see every stage' : 'drag a card to another stage to move it') + '</div>';
   h += '<div class="toolbar"><input id="q" type="search" placeholder="Search client, solution or project ID" value="' + esc(S.q) + '"><label class="toggle"><input type="checkbox" id="fo"' + (S.flagOnly ? ' checked' : '') + '> Flagged only (' + flagged + ')</label></div><div class="board">';
   [1, 2, 3, 4].forEach(function (n) {
     var arr = live.filter(function (p) { return p.stage === n && ok(p); });
@@ -400,37 +397,6 @@ function renderListBoard() {
     };
   });
   $$('li.pj', m).forEach(function (li) { li.onclick = function () { location.hash = '#p=' + encodeURIComponent(li.dataset.id); }; });
-  $('#fabwrap').innerHTML = '<button class="btn fab noprint" id="newbtn">+ New project</button>';
-  $('#newbtn').onclick = openNew;
-}
-function renderListStatus() {
-  var b = buckets(), q = S.q.trim().toLowerCase(), live = S.projects.filter(function (p) { return p.stage < 6; });
-  var done = S.projects.filter(function (p) { return p.stage === 6; });
-  var flagged = live.filter(function (p) { return p.flags.length; }).length;
-  var tiles = [['plate', 'My plate', 'me'], ['sales', 'Sales', 'sales'], ['client', 'Client', 'client'], ['internal', 'Internal', ''], ['hold', 'On hold', '']];
-  var h = '<div class="card"><div class="stats">' + tiles.map(function (t) { return '<button class="stat ' + t[2] + (S.tab === t[0] ? ' on' : '') + '" data-tab="' + t[0] + '"><b>' + b[t[0]].length + '</b><span>' + t[1] + '</span></button>'; }).join('') + '</div>' +
-    '<div class="muted" style="margin-top:10px">' + live.length + ' live projects \u00b7 ' + (flagged ? flagged + ' flagged' : 'nothing flagged') + ' \u00b7 <a href="#" id="showall" style="color:var(--brand-dk);font-weight:700">' + (S.tab === 'all' ? 'Showing all' : 'Show all live') + '</a></div></div>';
-  h += '<div class="toolbar"><input id="q" type="search" placeholder="Search client, solution or project ID" value="' + esc(S.q) + '"><select id="sf"><option value="">All stages</option>' +
-    [1, 2, 3, 4, 5, 6].map(function (n) { return '<option value="' + n + '"' + (String(S.stageF) === String(n) ? ' selected' : '') + '>' + n + ' ' + esc(stageName(n)) + '</option>'; }).join('') + '</select>' +
-    '<label class="toggle"><input type="checkbox" id="fo"' + (S.flagOnly ? ' checked' : '') + '> Flagged only (' + flagged + ')</label></div>';
-  var list;
-  if (q) list = S.projects.filter(function (p) { return (p.client + ' ' + p.solution + ' ' + p.projectId + ' ' + p.salesPic).toLowerCase().indexOf(q) >= 0; });
-  else list = S.tab === 'all' ? live : b[S.tab];
-  if (S.stageF) list = list.filter(function (p) { return String(p.stage) === String(S.stageF); });
-  if (S.flagOnly) list = list.filter(function (p) { return p.flags.length; });
-  var live2 = sortList(list.filter(function (p) { return p.stage < 6; })), done2 = list.filter(function (p) { return p.stage === 6; });
-  h += live2.length ? '<ul class="list">' + live2.map(cardHtml).join('') + '</ul>' : '<div class="empty">' + (q ? 'No project matches your search.' : 'Nothing here. Tap another tile or add a project.') + '</div>';
-  var doneList = q ? done2 : (S.flagOnly || (S.stageF && String(S.stageF) !== '6') ? [] : done);
-  if (doneList.length) h += '<details class="done"' + (q || String(S.stageF) === '6' ? ' open' : '') + '><summary>Won \u2013 Handed Over (' + doneList.length + ')</summary><ul class="list">' + doneList.slice().sort(function (x, y) { return x.client.localeCompare(y.client); }).map(cardHtml).join('') + '</ul></details>';
-  h += footerHtml();
-  var m = $('#main'); m.innerHTML = h;
-  $$('.stat', m).forEach(function (el) { el.onclick = function () { S.tab = el.dataset.tab; S.q = ''; renderList(); }; });
-  $('#showall', m).onclick = function (e) { e.preventDefault(); S.tab = 'all'; S.q = ''; renderList(); };
-  $('#sf', m).onchange = function () { S.stageF = this.value; renderList(); };
-  $('#fo', m).onchange = function () { S.flagOnly = this.checked; renderList(); };
-  var qi = $('#q', m); qi.oninput = function () { S.q = this.value; var pos = this.selectionStart; renderList(); var n = $('#q'); n.focus(); n.setSelectionRange(pos, pos); };
-  $$('li.pj', m).forEach(function (li) { li.onclick = function (e) { if (e.target.closest('.mv')) return; location.hash = '#p=' + encodeURIComponent(li.dataset.id); }; });
-  $$('.mv', m).forEach(function (bt) { bt.onclick = function (e) { e.stopPropagation(); var p = S.projects.filter(function (x) { return x.id === bt.dataset.id; })[0]; openMove(p, defaultTarget(p), function () { showList(); }); }; });
   $('#fabwrap').innerHTML = '<button class="btn fab noprint" id="newbtn">+ New project</button>';
   $('#newbtn').onclick = openNew;
 }
