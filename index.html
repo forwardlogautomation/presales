@@ -108,6 +108,8 @@ tr.check td{background:var(--warn-bg)}
 .bc .na{font-size:12.5px;margin-top:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 main.wide{max-width:none}
 .fbar{flex-wrap:nowrap;overflow-x:auto;margin:0 0 10px;padding-bottom:4px;scrollbar-width:none}.fbar::-webkit-scrollbar{display:none}.fbar button{white-space:nowrap;flex:none}
+.pj .t1 b,.bc b{text-transform:uppercase}
+.toggles{display:flex;gap:18px;flex:1 0 100%;flex-wrap:wrap}.toggles .toggle{flex:0 0 auto}
 @media (max-width:700px){.board{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(84vw,340px);scroll-snap-type:x mandatory;margin:0 -12px;padding:0 12px 12px;scroll-padding:0 12px}.bcol{scroll-snap-align:start}}</style>
 </head><body>
 <script>window.FL_LOADER={"app":"Presales Pipeline","quiet":[],"messages":{"adminImport":"Importing projects…","saveProject":"Saving the project…","addUpdate":"Saving the update…","moveStage":"Moving the project…"}}</script>
@@ -344,7 +346,7 @@ function ago(n) { return n === null || n === undefined ? '' : (n === 0 ? 'today'
 function footerHtml() { return '<footer class="tag"><b>FORWARDLOG</b> \u00b7 Endless Flexibility In Automation</footer>'; }
 </script>
 <script>
-var S = { projects: [], cfg: null, tab: 'plate', q: '', stageF: '', flagOnly: false, cur: null, fs: loadFs(), view: ls('pp_view') === 'board' ? 'board' : 'list' };
+var S = { projects: [], cfg: null, tab: 'plate', q: '', stageF: '', flagOnly: false, cur: null, fs: loadFs(), hideHold: ls('pp_hidehold') === '1', view: ls('pp_view') === 'board' ? 'board' : 'list' };
 function stageName(n) { return S.cfg.stages[n]; }
 function loadCfg() { return S.cfg ? Promise.resolve(S.cfg) : api('getConfig').then(function (c) { S.cfg = c; if (c.isAdmin) $('#adminlink').classList.remove('hidden'); return c; }); }
 
@@ -419,11 +421,11 @@ function renderList() {
 function renderListStage() {
   var q = S.q.trim().toLowerCase(), live = S.projects.filter(function (p) { return p.stage < 6; }), done = S.projects.filter(function (p) { return p.stage === 6; });
   var flagged = live.filter(function (p) { return p.flags.length; }).length, held = live.filter(function (p) { return p.onHold; }).length;
-  function ok(p) { return (!q || (p.client + ' ' + p.solution + ' ' + p.projectId + ' ' + p.salesPic).toLowerCase().indexOf(q) >= 0) && (!S.flagOnly || p.flags.length) && matchF(p); }
+  function ok(p) { return (!q || (p.client + ' ' + p.solution + ' ' + p.projectId + ' ' + p.salesPic).toLowerCase().indexOf(q) >= 0) && (!S.flagOnly || p.flags.length) && matchF(p) && (!S.hideHold || !p.onHold || S.fs.indexOf('hold') >= 0); }
   function items(arr) { return arr.length ? '<ul class="list">' + sortStage(arr).map(cardHtml).join('') + '</ul>' : '<div class="secnone">None</div>'; }
   var h = switchHtml() + '<div class="card"><div class="stats">' + [1, 2, 3, 4, 5].map(function (n) { return '<button class="stat" data-sec="' + n + '"><b>' + live.filter(function (p) { return p.stage === n; }).length + '</b><span>' + ({ 1: 'Data coll.', 2: 'Data analysis', 3: 'Solution design', 4: 'Proposal design', 5: 'Proposal stage' }[n]) + '</span></button>'; }).join('') + '</div>' +
     '<div class="muted" style="margin-top:10px">' + live.length + ' live projects \u00b7 ' + held + ' on hold \u00b7 ' + (flagged ? flagged + ' flagged' : 'nothing flagged') + '</div></div>' + filterBar(live);
-  h += '<div class="toolbar"><input id="q" type="search" placeholder="Search client, solution or project ID" value="' + esc(S.q) + '"><label class="toggle"><input type="checkbox" id="fo"' + (S.flagOnly ? ' checked' : '') + '> Flagged only (' + flagged + ')</label></div>';
+  h += '<div class="toolbar"><input id="q" type="search" placeholder="Search client, solution or project ID" value="' + esc(S.q) + '"><div class="toggles"><label class="toggle"><input type="checkbox" id="hh"' + (S.hideHold ? ' checked' : '') + '> Hide on hold (' + held + ')</label><label class="toggle"><input type="checkbox" id="fo"' + (S.flagOnly ? ' checked' : '') + '> Flagged only (' + flagged + ')</label></div></div>';
   [1, 2, 3, 4].forEach(function (n) {
     var arr = live.filter(function (p) { return p.stage === n && ok(p); });
     h += '<div class="sechead" id="sec-' + n + '"><h2>' + n + ' ' + esc(stageName(n)) + '</h2><span>' + arr.length + '</span></div>' + items(arr);
@@ -438,6 +440,7 @@ function renderListStage() {
   var m = $('#main'); m.innerHTML = h; bindSwitch(); bindFilter(m);
   $$('.stat', m).forEach(function (el) { el.onclick = function () { var t = $('#sec-' + el.dataset.sec); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }; });
   $('#fo', m).onchange = function () { S.flagOnly = this.checked; renderList(); };
+  $('#hh', m).onchange = function () { S.hideHold = this.checked; ls('pp_hidehold', this.checked ? '1' : '0'); renderList(); };
   var qi = $('#q', m); qi.oninput = function () { S.q = this.value; var pos = this.selectionStart; renderList(); var n = $('#q'); n.focus(); n.setSelectionRange(pos, pos); };
   $$('li.pj', m).forEach(function (li) { li.onclick = function (e) { if (e.target.closest('.mv')) return; location.hash = '#p=' + encodeURIComponent(li.dataset.id); }; });
   $$('.mv', m).forEach(function (bt) { bt.onclick = function (e) { e.stopPropagation(); var p = S.projects.filter(function (x) { return x.id === bt.dataset.id; })[0]; openMove(p, defaultTarget(p), function () { showList(); }); }; });
@@ -454,11 +457,11 @@ function boardCard(p) {
 function renderListBoard() {
   var q = S.q.trim().toLowerCase(), live = S.projects.filter(function (p) { return p.stage < 6; }), done = S.projects.filter(function (p) { return p.stage === 6; });
   var flagged = live.filter(function (p) { return p.flags.length; }).length, held = live.filter(function (p) { return p.onHold; }).length;
-  function ok(p) { return (!q || (p.client + ' ' + p.solution + ' ' + p.projectId + ' ' + p.salesPic).toLowerCase().indexOf(q) >= 0) && (!S.flagOnly || p.flags.length) && matchF(p); }
+  function ok(p) { return (!q || (p.client + ' ' + p.solution + ' ' + p.projectId + ' ' + p.salesPic).toLowerCase().indexOf(q) >= 0) && (!S.flagOnly || p.flags.length) && matchF(p) && (!S.hideHold || !p.onHold || S.fs.indexOf('hold') >= 0); }
   function cards(arr) { return arr.length ? sortStage(arr).map(boardCard).join('') : '<div class="secnone">None</div>'; }
   var touch = window.matchMedia && matchMedia('(hover: none)').matches;
   var h = switchHtml() + filterBar(live) + '<div class="muted" style="margin:0 2px 10px">' + live.length + ' live projects \u00b7 ' + held + ' on hold \u00b7 ' + (flagged ? flagged + ' flagged' : 'nothing flagged') + ' \u00b7 ' + (touch ? 'swipe sideways to see every stage' : 'drag a card to another stage to move it') + '</div>';
-  h += '<div class="toolbar"><input id="q" type="search" placeholder="Search client, solution or project ID" value="' + esc(S.q) + '"><label class="toggle"><input type="checkbox" id="fo"' + (S.flagOnly ? ' checked' : '') + '> Flagged only (' + flagged + ')</label></div><div class="board">';
+  h += '<div class="toolbar"><input id="q" type="search" placeholder="Search client, solution or project ID" value="' + esc(S.q) + '"><div class="toggles"><label class="toggle"><input type="checkbox" id="hh"' + (S.hideHold ? ' checked' : '') + '> Hide on hold (' + held + ')</label><label class="toggle"><input type="checkbox" id="fo"' + (S.flagOnly ? ' checked' : '') + '> Flagged only (' + flagged + ')</label></div></div><div class="board">';
   [1, 2, 3, 4].forEach(function (n) {
     var arr = live.filter(function (p) { return p.stage === n && ok(p); });
     h += '<div class="bcol" data-stage="' + n + '"><h3><span>' + n + ' ' + esc(stageName(n)) + '</span><span>' + arr.length + '</span></h3>' + cards(arr) + '</div>';
@@ -471,6 +474,7 @@ function renderListBoard() {
   h += footerHtml();
   var m = $('#main'); m.innerHTML = h; bindSwitch(); bindFilter(m);
   $('#fo', m).onchange = function () { S.flagOnly = this.checked; renderList(); };
+  $('#hh', m).onchange = function () { S.hideHold = this.checked; ls('pp_hidehold', this.checked ? '1' : '0'); renderList(); };
   var qi = $('#q', m); qi.oninput = function () { S.q = this.value; var pos = this.selectionStart; renderList(); var n = $('#q'); n.focus(); n.setSelectionRange(pos, pos); };
   $$('.bc', m).forEach(function (c) {
     c.onclick = function () { location.hash = '#p=' + encodeURIComponent(c.dataset.id); };
@@ -503,14 +507,14 @@ function showProject(id) {
 function fact(k, v) { return v ? '<dt>' + k + '</dt><dd>' + v + '</dd>' : ''; }
 function renderProject() {
   var p = S.cur.project, tl = S.cur.timeline;
-  $('#title').textContent = p.client;
+  $('#title').textContent = String(p.client).toUpperCase();
   var chips = '<span class="chip brand">' + esc(p.stage + ' ' + p.stageName) + '</span>';
   if (p.stage === 5 && p.step) chips += '<span class="chip ' + (p.step === 'Presented' ? 'info' : 'warn') + '">' + (p.step === 'Presented' ? 'Presented' : 'Pending to present') + '</span>';
   chips += p.onHold ? '<span class="chip">On hold' + (p.holdReason ? ': ' + esc(p.holdReason) : '') + '</span>' : waitChip(p);
   if (p.solutionRev > 1) chips += '<span class="chip">v' + p.solutionRev + '</span>';
   chips += flagChips(p);
   var h = '<div class="row noprint" style="margin-bottom:10px"><button class="btn sm sec" id="back" style="flex:0 0 auto">\u2190 Pipeline</button><button class="btn sm sec" id="edit" style="flex:0 0 auto;margin-left:auto">Edit details</button></div>';
-  h += '<div class="card"><div style="font-size:18px;font-weight:800">' + esc(p.client) + '</div><div class="muted">' + esc(p.solution) + (p.projectId ? ' \u00b7 #' + esc(p.projectId) : ' \u00b7 lead, no project ID yet') + '</div><div class="chips">' + chips + '</div><div class="clock muted" style="margin-top:8px">' + clockText(p) + '</div></div>';
+  h += '<div class="card"><div style="font-size:18px;font-weight:800;text-transform:uppercase">' + esc(p.client) + '</div><div class="muted">' + esc(p.solution) + (p.projectId ? ' \u00b7 #' + esc(p.projectId) : ' \u00b7 lead, no project ID yet') + '</div><div class="chips">' + chips + '</div><div class="clock muted" style="margin-top:8px">' + clockText(p) + '</div></div>';
   h += '<div class="card"><h2>Stage</h2><div class="stagebar">' + [1, 2, 3, 4, 5, 6].map(function (n) { return '<button data-to="' + n + '" class="' + (n === p.stage ? 'on' : '') + '"><b>' + n + '</b>' + esc(S.cfg.stages[n]).replace(' \u2013 ', '<br>') + '</button>'; }).join('') + '</div>';
   if (p.stage === 5) h += '<div class="seg"><button data-step="Pending" class="' + (p.step === 'Pending' ? 'on' : '') + '">Pending to present</button><button data-step="Presented" class="' + (p.step === 'Presented' ? 'on' : '') + '">Presented</button></div>';
   h += '<div class="muted" style="margin-top:8px">Tap any stage to move there, forward or back.</div></div>';
@@ -626,7 +630,7 @@ function openEdit(p, after) {
     '<div class="row"><div><label>SE PIC</label><input id="f_sePic" value="' + esc(p.sePic) + '"></div><div><label>Sales PIC</label><input id="f_salesPic" value="' + esc(p.salesPic) + '"></div></div>' +
     '<label>Remarks</label><textarea id="f_remarks">' + esc(p.remarks) + '</textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Save details</button></div>');
   submitBtn(o, 'Details', function () {
-    var f = { id: p.id }; ['client', 'solution', 'projectId', 'waitingOn', 'priority', 'dataStatus', 'targetDate', 'pendingData', 'designBasis', 'sePic', 'salesPic', 'remarks'].forEach(function (k) { f[k] = $('#f_' + k, o).value; });
+    var f = { id: p.id }; ['client', 'solution', 'projectId', 'waitingOn', 'priority', 'dataStatus', 'targetDate', 'pendingData', 'designBasis', 'sePic', 'salesPic', 'remarks'].forEach(function (k) { f[k] = $('#f_' + k, o).value; }); f.client = String(f.client).toUpperCase();
     return api('saveProject', [f]);
   }, after);
 }
@@ -642,7 +646,7 @@ function openNew() {
   };
   submitBtn(o, 'Project', function () {
     var v = function (k) { return $('#n_' + k, o).value; };
-    return api('saveProject', [{ client: v('client'), solution: v('solution'), projectId: v('projectId'), stage: +v('stage'), step: step, salesPic: v('salesPic'), date: v('date'), presentedDate: v('date'), statusNote: v('note') }])
+    return api('saveProject', [{ client: v('client').toUpperCase(), solution: v('solution'), projectId: v('projectId'), stage: +v('stage'), step: step, salesPic: v('salesPic'), date: v('date'), presentedDate: v('date'), statusNote: v('note') }])
       .then(function (r) { S.projects = []; location.hash = '#p=' + encodeURIComponent(r.id); });
   });
 }
