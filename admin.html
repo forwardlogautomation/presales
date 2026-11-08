@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5F7A61">
+<title>Admin · Presales Pipeline · Forwardlog</title>
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAYFBMVEVPbVGaq520wrfb4txVVVVNbFB/loP////8/PxqhGxVc1prd22tuq9lZWUAAADP1tBbW1tcemGHmoro7OhObVOLi4tMaUzCzMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjtjjKAAAAGHRSTlOi////A33/Af7+//7//wD/////////Rv+bcddjAAAA9ElEQVR42qWTy3LDIAxFBU5SJPEIj5j//9PK0GaaGRkvehZ4wRksaXQhxrgDqsAul3CLgL06hdoR4g0ieHeKkesd3QLcAdJKSADsljDgWsAplNekuFRKV4TwnATnW/OKwCGwENhZIl3gn1n5U8FdCCENFsLB87UQRhcrwXjvTf9HkX8EeyEwlppMKfZz1OFXaJmSIaFh0l6wmbtvcydpewufS0I45m5a0QX5wUM+nXKuqlCIm3EbZaZ0JmQ+2mEpQhPsEI4T9RocEhM+MstuVdTWPpHUR/loQtZeC85WMhH6GZwIRstl2kbH94vw3r8kvBfx/wZi1iWWldh1rgAAAABJRU5ErkJggg==">
+<link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAYFBMVEWWoJdohGxmdGjT29RdeWBge2O3w7gA/wB+lYJfe2G/ysFkgGY5cjlVqlX/AP/////+/v5XdFpiemTW3NZdemJmZmYAAABcXFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtULo7AAAAGHRSTlP+/hX/0pr/Af9E/7cEAwEB//7+////AP+l/WZQAAAB+0lEQVR42u2X25LCMAiGyaG11sMGEuv7v+lCEttudXeS9GK98HccDyNfgSAFmFgHPU26s1Qs27HFRUwn4Cd/OFrCGgU6HfnCCaD56goRwBcL+PeKvdAC4BerELyrkgdUVghw0GLfu2r1QtAH0BP7b1yDDEcxaZiOTdfPPnAI2iK4RgF2GjShbwV4JA1duwPRBbD7ABZ2RBBjeCsAPEmqRV77MsDtvtGNvxwsog1lALptRDHPREHtA4Q6wCaEagBtklgLuMNTrX0A1aew7u1uXx3c7r4JsNI/AVal7PeWsvlU4lsBcmc2nt/4BkBAq7wbhxDnI7UwSgGEAzd4Ga1EjIE//o3PACJUzpD09ySKwJc3lhceWBnqjGP7kIfEwI/sw6tb2xbAGnr2n8KPMTERim+uBtnrVatRHIipAbADtBrlJDHRhVKAibmbCfFkUFUAPKYDSIQxfSJTDkjVxKeZ4k5nKXZ1gJR6owK1AuK/6hFOFcC/AISaJDoVtoC6Y1xiMFJTCdDXAGa/EUZcIhBa4ag7u5DNc13KqNv93rA2xZwsw5IByU1XPO4DZuMgLQWWcf9aOu9DiC2Jo0A1ztP+lbe20pXHgKLYEvvZKVl5zjVLl8ljx7J0XdrXPshrH++v7Yvn16Ft9TVp9T3L8vxYvk87lu+EqF//dTT9Bqhb++c3Oa4OAAAAAElFTkSuQmCC">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>:root{--brand:#5F7A61;--brand-dk:#475C4A;--brand-lt:#E9F0E9;--brand-ink:#fff;--bg:#F3F5F2;--card:#fff;--ink:#262A27;--grey:#6B6B6B;--muted:#7A807B;--line:#E2E7E2;--ok:#2E7D4F;--ok-bg:#E2F3E8;--bad:#C0392B;--bad-bg:#FBE4E1;--warn:#B7791F;--warn-bg:#FDF1DC;--info:#2A5D9F;--info-bg:#E7F1FB;--radius:14px;--shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(40,60,45,.06)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:3px solid var(--brand);padding:8px max(12px, calc((100% - 900px) / 2 + 12px)) 6px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+header.top .logo{height:58px;width:auto;margin:-4px auto -4px 0;display:block;min-width:60px}
+header.top .logo[src=""]{visibility:hidden}
+header.top .htitle{order:3;flex:1 0 100%;display:flex;align-items:baseline;gap:8px;padding:5px 2px 0;border-top:1px solid var(--line)}
+header.top .app{font-size:10px;font-weight:800;letter-spacing:1.6px;color:var(--brand);text-transform:uppercase}
+header.top h1{font-size:15px;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+header.top .hlink{font-size:13px;font-weight:700;color:var(--brand-dk);text-decoration:none;padding:4px 2px}
+header.top button{background:var(--brand-lt);color:var(--brand-dk);border:0;border-radius:10px;padding:7px 11px;font-weight:700;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+#acct{display:flex;align-items:center;gap:8px}
+#acct .av{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+#acct .who{line-height:1.15;text-align:right}#acct .who b{display:block;font-size:12.5px}#acct .who span{font-size:11px;color:var(--muted)}
+@media (max-width:640px){#acct .who{display:none}}
+main{max-width:900px;margin:0 auto;padding:14px 12px 120px}
+footer.tag{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.4px;padding:4px 0 22px}footer.tag b{color:var(--brand)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.card h2{font-size:13px;margin:0 0 12px;text-transform:uppercase;letter-spacing:.8px;color:var(--grey);font-weight:700}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 5px}
+input,select,textarea{width:100%;font:inherit;font-size:16px;padding:11px 12px;border:1.5px solid #CBD3CB;border-radius:11px;background:#fff;color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(95,122,97,.22)}
+input[type=checkbox],input[type=radio]{width:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:11px;padding:12px 16px;min-height:44px;font:inherit;font-size:15px;font-weight:700;background:var(--brand);color:#fff;cursor:pointer;text-decoration:none}
+.btn:active{transform:scale(.97);filter:brightness(.93)}.btn.sec{background:#EDF1ED;color:var(--ink)}.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}.btn.sm{padding:8px 12px;font-size:13px;min-height:36px}.btn:disabled{opacity:.5}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1 1 150px}.muted{color:var(--muted);font-size:12.5px}.hidden{display:none!important}
+.chip{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.4px;padding:4px 9px;border-radius:999px;background:#ECEFEC;color:#4B524C;text-transform:uppercase;white-space:nowrap}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.bad{background:var(--bad-bg);color:var(--bad)}.chip.warn{background:var(--warn-bg);color:var(--warn)}.chip.brand{background:var(--brand-lt);color:var(--brand-dk)}.chip.info{background:var(--info-bg);color:var(--info)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 0}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.stat{background:#F7F9F7;border:1.5px solid var(--line);border-radius:12px;padding:9px 2px 8px;text-align:center;cursor:pointer;font:inherit;color:inherit}
+.stat b{display:block;font-size:24px;font-weight:800;line-height:1.1}.stat span{display:block;line-height:1.2;margin-top:3px;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.2px}
+.stat.on{border-color:var(--brand);background:var(--brand-lt)}
+.stat.me b{color:var(--ok)}.stat.sales b{color:var(--warn)}.stat.client b{color:var(--info)}
+.toolbar{display:flex;gap:8px;margin:12px 0 10px;flex-wrap:wrap;align-items:center}.toolbar input[type=search]{flex:2 1 160px;min-width:0}.toolbar select{flex:1 1 130px;min-width:0}
+.toggle{display:flex;flex:1 0 100%;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--grey);margin:0}
+.list{list-style:none;margin:0;padding:0}
+.list li.pj{background:#fff;border:1px solid var(--line);border-left:5px solid #CBD3CB;border-radius:12px;padding:12px 10px 12px 12px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;cursor:pointer;box-shadow:var(--shadow)}
+.list li.pj.w-me{border-left-color:var(--ok)}.list li.pj.w-sales{border-left-color:#E0A33A}.list li.pj.w-client{border-left-color:#4F8AD1}.list li.pj.w-hold{border-left-color:#9AA19B;background:#FAFBFA}
+.pj .main{flex:1;min-width:0}.pj .t1{font-size:15px}.pj .t1 b{font-weight:700}.pj .clock{font-size:12px;color:var(--grey);margin-top:6px}.pj .na{font-size:13px;color:var(--ink);margin-top:3px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.empty{text-align:center;color:var(--muted);padding:26px 10px}
+details.done{margin-top:14px}details.done summary{cursor:pointer;font-weight:700;color:var(--grey);padding:10px 4px;font-size:13px}
+.stagebar{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+.stagebar button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 1px;font:inherit;font-size:9.5px;font-weight:700;color:var(--grey);cursor:pointer;line-height:1.2;min-height:60px;min-width:0;overflow-wrap:anywhere}
+.stagebar button b{display:block;font-size:15px;color:var(--ink)}
+.stagebar button.on{background:var(--brand);border-color:var(--brand);color:#fff}.stagebar button.on b{color:#fff}
+@media (max-width:480px){.stagebar{grid-template-columns:repeat(3,minmax(0,1fr))}.stagebar button{font-size:11px;min-height:58px}}
+.seg{display:flex;gap:6px;margin-top:10px}.seg button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 6px;font:inherit;font-size:13px;font-weight:700;color:var(--grey);cursor:pointer;min-height:44px}
+.seg button.on{background:var(--brand-lt);border-color:var(--brand);color:var(--brand-dk)}
+dl.facts{display:grid;grid-template-columns:130px 1fr;gap:8px 10px;margin:0}dl.facts dt{font-size:12px;font-weight:600;color:var(--muted)}dl.facts dd{margin:0;word-break:break-word}
+@media (max-width:480px){dl.facts{grid-template-columns:1fr}dl.facts dt{margin-top:6px}}
+.tl{list-style:none;margin:0;padding:0}.tl li{border-left:3px solid var(--line);padding:2px 0 14px 12px;margin-left:5px;position:relative}
+.tl li:before{content:"";position:absolute;left:-8px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--brand)}
+.tl li.undone{opacity:.5}.tl .d{font-size:12px;color:var(--muted)}.tl .n{margin-top:2px;white-space:pre-wrap;word-break:break-word}
+.actionbar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px max(12px, calc((100% - 900px) / 2 + 12px)) calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;z-index:25}
+.actionbar .btn{flex:1;padding:12px 8px}
+.fab{position:fixed;right:max(14px, calc((100% - 900px) / 2 + 14px));bottom:calc(18px + env(safe-area-inset-bottom));z-index:24;box-shadow:0 6px 18px rgba(40,60,45,.35);border-radius:999px;padding:14px 20px}
+.overlay{position:fixed;inset:0;background:rgba(20,28,22,.45);z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));animation:up .18s ease-out}
+@keyframes up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet h3{margin:0 0 4px;font-size:17px}.sheet .sub{color:var(--muted);font-size:13px;margin-bottom:6px}
+.sheet .btns{display:flex;gap:8px;margin-top:16px}.sheet .btns .btn{flex:1}
+.chipsel{display:flex;flex-wrap:wrap;gap:6px}.chipsel button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font:inherit;font-size:13px;font-weight:600;color:var(--grey);cursor:pointer;min-height:40px}
+.chipsel button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.hint{background:var(--info-bg);color:var(--info);border-radius:10px;padding:8px 10px;font-size:12.5px;margin-top:8px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;z-index:60;font-weight:600;max-width:90vw}
+.toast.err{background:var(--bad)}
+#wall{position:fixed;inset:0;z-index:80;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+#wall .box{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:26px 22px;max-width:380px;width:100%;text-align:center}
+#wall img{height:64px;margin-bottom:6px}#wall h2{font-size:17px;margin:6px 0 4px}#wall p{color:var(--muted);font-size:13px;margin:0 0 16px}
+#wall #gbtn{display:flex;justify-content:center;min-height:44px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:10.5px;color:var(--muted);text-transform:uppercase;font-weight:700;white-space:nowrap}
+table select,table input[type=date]{font-size:14px;padding:7px 8px;min-width:130px}
+.tablewrap table{min-width:1020px}
+td select[data-k=stage]{min-width:180px}
+tr.check td{background:var(--warn-bg)}
+@media print{header.top button,.noprint{display:none!important}body{background:#fff}.card{border:0;box-shadow:none}}
+</style>
+</head><body>
+<header class="top">
+  <img class="logo" alt="Forwardlog" src="">
+  <div id="acct"></div>
+  <div class="htitle"><span class="app">Presales</span><h1>Admin</h1><a class="hlink" href="./">&larr; Pipeline</a></div>
+</header>
+<main id="main"><div class="empty">Loading…</div></main>
+<script>/* ===== Presales Pipeline - shared JS (auth, API, helpers) ===== */
+var API_URL = 'https://script.google.com/macros/s/AKfycbwnhvU7OaqUI4fE5RFm6MbGzwi7ABViYUFMKOriTCzR1ITjvR1K0ScmARxBxE6rRsHD/exec', CLIENT_ID = '91172054296-efavj9to958vrqkdk67pa96fo82466gk.apps.googleusercontent.com', HD = 'forwardlogauto.com';
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+function esc(s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { } return null; }
+var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function fmtDate(iso, withYear) {
+  var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); if (!m) return '';
+  return (+m[3]) + ' ' + MON[+m[2] - 1] + (withYear ? ' ' + m[1] : '');
+}
+function todayIso() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function toast(msg, err) {
+  var t = document.createElement('div'); t.className = 'toast' + (err ? ' err' : ''); t.textContent = msg; document.body.appendChild(t);
+  setTimeout(function () { t.remove(); }, err ? 4500 : 2200);
+}
+
+/* ---- logo (served by the API, cached) ---- */
+function loadLogo() {
+  var imgs = $$('img.logo, #wall img'), c = ls('pp_logo');
+  function set(u) { imgs.forEach(function (i) { i.src = u; }); }
+  if (c) set(c);
+  fetch(API_URL, { method: 'POST', body: JSON.stringify({ fn: 'getLogo', args: [] }), redirect: 'follow', credentials: 'omit' })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j && j.ok && j.result) { ls('pp_logo', j.result); set(j.result); } })
+    .catch(function () { });
+}
+
+/* ---- Google sign-in ---- */
+var _auth = null, _gsi = null, _waiters = [], _renew = null;
+function readAuth() {
+  try { var a = JSON.parse(ls('pp_auth') || 'null'); if (a && a.token && a.exp - Date.now() > 60000) return a; } catch (e) { }
+  return null;
+}
+function loadGsi() {
+  if (_gsi) return _gsi;
+  _gsi = new Promise(function (res, rej) {
+    if (window.google && google.accounts && google.accounts.id) return res();
+    var s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+    s.onload = function () { res(); }; s.onerror = function () { _gsi = null; rej(new Error('Could not load Google sign-in')); };
+    document.head.appendChild(s);
+  }).then(function () {
+    google.accounts.id.initialize({ client_id: CLIENT_ID, callback: onCredential, auto_select: true, hd: HD, use_fedcm_for_prompt: true });
+  });
+  return _gsi;
+}
+function decodeJwt(t) {
+  var p = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+  return JSON.parse(decodeURIComponent(escape(atob(p + '==='.slice((p.length + 3) % 4)))));
+}
+function onCredential(resp) {
+  try {
+    var p = decodeJwt(resp.credential);
+    if (p.hd !== HD) { toast('Please sign in with your @' + HD + ' account', true); return; }
+    _auth = { token: resp.credential, exp: p.exp * 1000, name: p.name || p.email, email: p.email, picture: p.picture || '' };
+    ls('pp_auth', JSON.stringify(_auth));
+    var w = $('#wall'); if (w) w.remove();
+    scheduleRenew(); renderChip();
+    var q = _waiters; _waiters = []; q.forEach(function (f) { f(_auth); });
+  } catch (e) { toast('Sign-in failed. Try again.', true); }
+}
+function scheduleRenew() {
+  clearTimeout(_renew);
+  var ms = Math.max(15000, _auth.exp - Date.now() - 5 * 60000);
+  _renew = setTimeout(function () { loadGsi().then(function () { google.accounts.id.prompt(); }).catch(function () { }); }, ms);
+}
+function showWall() {
+  if ($('#wall')) return;
+  var d = document.createElement('div'); d.id = 'wall';
+  d.innerHTML = '<div class="box"><img alt="Forwardlog" src="' + esc(ls('pp_logo') || '') + '"><h2>Presales Pipeline</h2><p>Sign in with your @' + HD + ' Google account to continue.</p><div id="gbtn"></div><p id="wallerr" class="muted" style="margin:12px 0 0"></p></div>';
+  document.body.appendChild(d);
+  loadGsi().then(function () {
+    google.accounts.id.renderButton($('#gbtn'), { theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', width: 260 });
+    google.accounts.id.prompt();
+  }).catch(function (e) { $('#wallerr').textContent = e.message + '. Check your connection and reload.'; });
+}
+function requireLogin() {
+  _auth = readAuth();
+  if (_auth) { scheduleRenew(); renderChip(); return Promise.resolve(_auth); }
+  return new Promise(function (res) { _waiters.push(res); showWall(); });
+}
+function signOut() {
+  if (!confirm('Sign out of Presales Pipeline?')) return;
+  ls('pp_auth', null); _auth = null;
+  loadGsi().then(function () { google.accounts.id.disableAutoSelect(); }).catch(function () { }).then(function () { location.reload(); });
+}
+function renderChip() {
+  var a = $('#acct'); if (!a || !_auth) return;
+  var ini = (_auth.name || '?').split(/\s+/).map(function (x) { return x[0]; }).join('').slice(0, 2).toUpperCase();
+  a.innerHTML = '<div class="av">' + esc(ini) + '</div><div class="who"><b>' + esc(_auth.name) + '</b><span>' + esc(_auth.email) + '</span></div><button id="so">Sign out</button>';
+  $('#so').onclick = signOut;
+}
+
+/* ---- API ---- */
+function api(fn, args) {
+  var a = _auth || readAuth();
+  if (!a) { _auth = null; return requireLogin().then(function () { return api(fn, args); }); }
+  return fetch(API_URL, { method: 'POST', body: JSON.stringify({ fn: fn, args: args || [], token: a.token }), redirect: 'follow', credentials: 'omit' })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j.ok) return j.result;
+      if (j.error === 'LOGIN_REQUIRED') { ls('pp_auth', null); _auth = null; return requireLogin().then(function () { return api(fn, args); }); }
+      throw new Error(j.error || 'Request failed');
+    });
+}
+
+/* ---- bottom sheet ---- */
+function openSheet(html, onClose) {
+  var o = document.createElement('div'); o.className = 'overlay';
+  o.innerHTML = '<div class="sheet" role="dialog">' + html + '</div>';
+  function close() { o.remove(); if (onClose) onClose(); }
+  o.addEventListener('mousedown', function (e) { if (e.target === o) close(); });
+  document.body.appendChild(o);
+  o.close = close;
+  return o;
+}
+
+/* ---- labels shared by pages ---- */
+function waitClass(p) {
+  if (p.stage === 6) return 'done';
+  if (p.onHold) return 'hold';
+  return { Me: 'me', Sales: 'sales', Client: 'client' }[p.waitingOn] || '';
+}
+function waitChip(p) {
+  if (p.stage === 6 || !p.waitingOn || p.waitingOn === 'None') return '';
+  var cls = { Me: 'ok', Sales: 'warn', Client: 'info' }[p.waitingOn] || '';
+  return '<span class="chip ' + cls + '">' + (p.waitingOn === 'Me' ? 'Me' : 'Waiting: ' + esc(p.waitingOn)) + '</span>';
+}
+var FLAG_LABEL = { MOVE_HOLD: 'Move to On Hold?', REVIEW: 'Review: still worth keeping?', MISSING: 'Missing info' };
+function flagChips(p) {
+  return (p.flags || []).map(function (f) { return '<span class="chip ' + (f === 'REVIEW' ? 'bad' : f === 'MISSING' ? '' : 'warn') + '">' + FLAG_LABEL[f] + '</span>'; }).join('');
+}
+function ago(n) { return n === null || n === undefined ? '' : (n === 0 ? 'today' : n + 'd'); }
+function footerHtml() { return '<footer class="tag"><b>FORWARDLOG</b> \u00b7 Endless Flexibility In Automation</footer>'; }
+</script>
+<script>/* ===== Excel import mapping (pure functions, no DOM). Works on an array-of-arrays from the sheet. ===== */
+var PPMap = (function () {
+  function norm(s) { return String(s === null || s === undefined ? '' : s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
+  function txt(v) { return v === null || v === undefined ? '' : (v instanceof Date ? '' : String(v)).trim(); }
+  var ALIASES = {
+    projectId: ['projectid', 'projectno'], client: ['client', 'customer'], solution: ['solution'], stage: ['stage'], status: ['status'],
+    waitingOn: ['waitingon'], solutionRev: ['solutionrev'], revisionReason: ['revisionreason'], dataStatus: ['datastatus'],
+    pendingData: ['pendingdataitems', 'pendingdata'], designBasis: ['designbasis'], statusNote: ['statusnotes', 'statusnote', 'currentstatus'],
+    nextAction: ['nextactions', 'nextaction'], sePic: ['sepic'], salesPic: ['salespic'], priority: ['priority'], targetDate: ['targetdate'],
+    stageDate: ['stagedate'], remarks: ['remarks'], lastUpdated: ['lastupdated']
+  };
+  function findHeader(aoa) {
+    for (var r = 0; r < Math.min(aoa.length, 20); r++) {
+      var cells = aoa[r].map(norm);
+      if (cells.indexOf('client') >= 0 && cells.indexOf('stage') >= 0) {
+        var map = {};
+        Object.keys(ALIASES).forEach(function (k) {
+          for (var c = 0; c < cells.length; c++) if (ALIASES[k].indexOf(cells[c]) >= 0 && map[k] === undefined) { map[k] = c; break; }
+        });
+        return { row: r, map: map };
+      }
+    }
+    return null;
+  }
+  var MON = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+  function p2(n) { return String(n).padStart(2, '0'); }
+  function toIso(v) {
+    if (v === null || v === undefined || v === '') return '';
+    if (v instanceof Date) { if (isNaN(v)) return ''; var d = new Date(v.getTime() + 12 * 3600 * 1000); return d.getUTCFullYear() + '-' + p2(d.getUTCMonth() + 1) + '-' + p2(d.getUTCDate()); }
+    if (typeof v === 'number') { if (v < 20000 || v > 80000) return ''; var dd = new Date(Math.round((v - 25569) * 86400000) + 12 * 3600 * 1000); return dd.getUTCFullYear() + '-' + p2(dd.getUTCMonth() + 1) + '-' + p2(dd.getUTCDate()); }
+    var s = String(v).trim(), m;
+    if ((m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s))) return m[1] + '-' + p2(m[2]) + '-' + p2(m[3]);
+    if ((m = /^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/.exec(s))) return (m[3].length === 2 ? '20' + m[3] : m[3]) + '-' + p2(m[2]) + '-' + p2(m[1]);
+    if ((m = /^(\d{1,2})[ -]([A-Za-z]{3})[a-z]*[ -](\d{2,4})$/.exec(s)) && MON[m[2].toLowerCase()]) return (m[3].length === 2 ? '20' + m[3] : m[3]) + '-' + p2(MON[m[2].toLowerCase()]) + '-' + p2(m[1]);
+    return '';
+  }
+  /* Excel stage text -> portal stage / step / hold. check=true means "please look at this row". */
+  function mapStage(stageText, statusText) {
+    var t = String(stageText || '').toLowerCase(), st = String(statusText || '').toLowerCase();
+    var o = { stage: 1, step: '', onHold: false, check: false };
+    if (/lost|dropped/.test(t)) { o.onHold = true; o.check = true; }
+    else if (/presented|awaiting feedback/.test(t)) { o.stage = 5; o.step = 'Presented'; }
+    else if (/proposal submitted|pending to present|proposal ready/.test(t)) { o.stage = 5; o.step = 'Pending'; }
+    else if (/proposal stage/.test(t)) { o.stage = 5; o.step = 'Presented'; o.check = true; }
+    else if (/proposal design/.test(t)) o.stage = 4;
+    else if (/solution design/.test(t)) o.stage = 3;
+    else if (/data analysis/.test(t)) o.stage = 2;
+    else if (/data collection|preliminary/.test(t)) o.stage = 1;
+    else if (/won|handover|handed|installation|completed/.test(t)) o.stage = 6;
+    else if (/on hold/.test(t)) { o.onHold = true; o.check = true; }
+    else o.check = true;
+    if (/on hold|lost/.test(st) && o.stage < 6) o.onHold = true;
+    return o;
+  }
+  function mapWaiting(v) {
+    var t = String(v || '').toLowerCase().trim();
+    if (t === 'client') return 'Client'; if (t === 'sales') return 'Sales'; if (t === 'none') return 'None';
+    if (t === 'me' || t === 'internal') return 'Me';
+    if (/internal/.test(t)) return 'Internal \u2013 other';
+    return '';
+  }
+  function parse(aoa, today) {
+    var h = findHeader(aoa);
+    if (!h) throw new Error('Could not find a header row with Client and Stage columns.');
+    var map = h.map, rows = [], maxUpd = '';
+    function cell(r, k) { return map[k] === undefined ? '' : r[map[k]]; }
+    for (var i = h.row + 1; i < aoa.length; i++) {
+      var r = aoa[i], client = txt(cell(r, 'client'));
+      if (!client) continue;
+      var st = mapStage(txt(cell(r, 'stage')), txt(cell(r, 'status')));
+      var w = mapWaiting(txt(cell(r, 'waitingOn')));
+      var lu = toIso(cell(r, 'lastUpdated')); if (lu && lu > maxUpd) maxUpd = lu;
+      var sd = toIso(cell(r, 'stageDate'));
+      var row = {
+        rowNo: i + 1, client: client, solution: txt(cell(r, 'solution')), projectId: txt(cell(r, 'projectId')), excelStage: txt(cell(r, 'stage')),
+        stage: st.stage, step: st.step, onHold: st.onHold, check: st.check, waitingOn: w,
+        solutionRev: Number(String(cell(r, 'solutionRev') || '').replace(/[^0-9.]/g, '')) || 1,
+        revisionReason: txt(cell(r, 'revisionReason')), dataStatus: txt(cell(r, 'dataStatus')), pendingData: txt(cell(r, 'pendingData')),
+        designBasis: txt(cell(r, 'designBasis')), statusNote: txt(cell(r, 'statusNote')), nextAction: txt(cell(r, 'nextAction')),
+        sePic: txt(cell(r, 'sePic')), salesPic: txt(cell(r, 'salesPic')), priority: txt(cell(r, 'priority')), targetDate: toIso(cell(r, 'targetDate')),
+        remarks: txt(cell(r, 'remarks')), lastUpdated: lu, stageDate: sd || lu || '', presentedDate: '', _estDefault: !sd && !lu, estimated: !sd
+      };
+      if (row.stage === 6) row.waitingOn = 'None';
+      row.holdReason = row.onHold ? (row.waitingOn === 'Client' ? 'Client silent' : 'Other') : '';
+      rows.push(row);
+    }
+    var def = maxUpd || today;
+    rows.forEach(function (row) {
+      if (!row.stageDate) row.stageDate = def;
+      row.presentedDate = (row.stage === 5 && row.step === 'Presented') ? row.stageDate : '';
+    });
+    return { rows: rows, defaultDate: def, headerRow: h.row + 1, columns: Object.keys(map) };
+  }
+  return { parse: parse, toIso: toIso, mapStage: mapStage, mapWaiting: mapWaiting, findHeader: findHeader };
+})();
+if (typeof module !== 'undefined') module.exports = PPMap;
+</script>
+<script>
+var A = { rows: [], defaultDate: '', cfg: null };
+function loadXlsx() {
+  if (window.XLSX) return Promise.resolve();
+  return new Promise(function (res, rej) {
+    var s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload = res; s.onerror = function () { rej(new Error('Could not load the Excel reader. Check your connection.')); };
+    document.head.appendChild(s);
+  });
+}
+function boot() {
+  loadLogo();
+  requireLogin().then(function () { return api('getConfig'); }).then(function (c) {
+    A.cfg = c;
+    if (!c.isAdmin) { $('#main').innerHTML = '<div class="card"><h2>Admin access needed</h2><p>Your account is signed in but is not on the admin list. Ask the portal owner to add your email to the ADMINS script property.</p></div>' + footerHtml(); return; }
+    draw();
+  }).catch(function (e) { $('#main').innerHTML = '<div class="empty">' + esc(e.message) + '</div>'; });
+}
+function draw() {
+  $('#main').innerHTML =
+    '<div class="card"><h2>Import from Excel</h2><p class="muted" style="margin-top:0">Choose your SE Tracker file. You review every row below before anything is saved.</p>' +
+    '<input type="file" id="file" accept=".xlsx,.xlsm,.xls"><div id="info" class="muted" style="margin-top:8px"></div><div id="review"></div></div>' +
+    '<div class="card"><h2>Export to Excel</h2><p class="muted" style="margin-top:0">Download the whole pipeline, including days in stage and flags, as an .xlsx file.</p><button class="btn" id="exp">Download Excel</button></div>' + footerHtml();
+  $('#file').onchange = onFile;
+  $('#exp').onclick = doExport;
+}
+function onFile() {
+  var f = this.files[0]; if (!f) return;
+  $('#info').textContent = 'Reading ' + f.name + '…'; $('#review').innerHTML = '';
+  loadXlsx().then(function () { return f.arrayBuffer(); }).then(function (buf) {
+    var wb = XLSX.read(buf, { type: 'array', cellDates: true });
+    var names = wb.SheetNames.slice().sort(function (a, b) { return (a === 'SE Tracker' ? 0 : 1) - (b === 'SE Tracker' ? 0 : 1); });
+    var parsed = null, used = '';
+    for (var i = 0; i < names.length && !parsed; i++) {
+      var aoa = XLSX.utils.sheet_to_json(wb.Sheets[names[i]], { header: 1, raw: true, defval: '' });
+      try { parsed = PPMap.parse(aoa, todayIso()); used = names[i]; } catch (e) { }
+    }
+    if (!parsed) throw new Error('No sheet with Client and Stage columns was found in this file.');
+    A.rows = parsed.rows; A.defaultDate = parsed.defaultDate;
+    $('#info').textContent = 'Read ' + A.rows.length + ' rows from the "' + used + '" sheet.';
+    drawReview();
+  }).catch(function (e) { $('#info').textContent = ''; toast(e.message, true); });
+}
+function sel(list, val, attrs) { return '<select ' + attrs + '>' + list.map(function (x) { return '<option' + (String(x[0]) === String(val) ? ' selected' : '') + ' value="' + esc(x[0]) + '">' + esc(x[1]) + '</option>'; }).join('') + '</select>'; }
+function drawReview() {
+  var c = A.cfg, stages = [1, 2, 3, 4, 5, 6].map(function (n) { return [n, n + ' ' + c.stages[n]]; });
+  var waits = [['', '(default)']].concat(c.waitingOn.map(function (w) { return [w, w]; }));
+  var checks = A.rows.filter(function (r) { return r.check; }).length;
+  var h = '<div class="hint" style="margin:12px 0">Dates not found in the file use the default date below and are marked estimated. ' + (checks ? '<b>' + checks + ' highlighted row(s)</b> had no clear stage; check them.' : '') + '</div>' +
+    '<div class="row"><div><label>Default date for missing dates</label><input type="date" id="dd" value="' + esc(A.defaultDate) + '"></div><div><label>Import mode</label><select id="mode"><option value="append">Add to existing projects</option><option value="replace">Replace everything</option></select></div></div>' +
+    '<div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Client</th><th>Excel stage</th><th>Stage</th><th>Step</th><th>Hold</th><th>Reason</th><th>Waiting on</th><th>Stage date</th><th>Presented</th></tr></thead><tbody>' +
+    A.rows.map(function (r, i) {
+      return '<tr class="' + (r.check ? 'check' : '') + '" data-i="' + i + '"><td><b>' + esc(r.client) + '</b><div class="muted">' + esc(r.solution) + (r.projectId ? ' \u00b7 #' + esc(r.projectId) : ' \u00b7 lead') + '</div></td><td class="muted">' + esc(r.excelStage || '(blank)') + '</td>' +
+        '<td>' + sel(stages, r.stage, 'data-k="stage"') + '</td>' +
+        '<td>' + (r.stage === 5 ? sel([['Pending', 'Pending to present'], ['Presented', 'Presented']], r.step, 'data-k="step"') : '<span class="muted">\u2013</span>') + '</td>' +
+        '<td><input type="checkbox" data-k="onHold"' + (r.onHold ? ' checked' : '') + (r.stage === 6 ? ' disabled' : '') + '></td>' +
+        '<td>' + (r.onHold ? sel(c.holdReasons.map(function (x) { return [x, x]; }), r.holdReason, 'data-k="holdReason"') : '<span class="muted">\u2013</span>') + '</td>' +
+        '<td>' + sel(waits, r.waitingOn, 'data-k="waitingOn"') + '</td>' +
+        '<td><input type="date" data-k="stageDate" value="' + esc(r.stageDate) + '"' + (r.stage === 6 ? ' disabled' : '') + '></td>' +
+        '<td>' + (r.stage === 5 && r.step === 'Presented' ? '<input type="date" data-k="presentedDate" value="' + esc(r.presentedDate) + '">' : '<span class="muted">\u2013</span>') + '</td></tr>';
+    }).join('') + '</tbody></table></div><div class="row" style="margin-top:14px"><button class="btn" id="imp">Import ' + A.rows.length + ' projects</button></div><div id="res" style="margin-top:10px"></div>';
+  $('#review').innerHTML = h;
+  $('#dd').onchange = function () {
+    A.defaultDate = this.value;
+    A.rows.forEach(function (r) { if (r._estDefault) { r.stageDate = A.defaultDate; if (r.stage === 5 && r.step === 'Presented') r.presentedDate = A.defaultDate; } });
+    drawReview();
+  };
+  $$('#review [data-k]').forEach(function (el) {
+    el.onchange = function () {
+      var i = +el.closest('tr').dataset.i, k = el.dataset.k, r = A.rows[i];
+      if (k === 'onHold') r.onHold = el.checked; else r[k] = (k === 'stage') ? +el.value : el.value;
+      if (k === 'stage') { if (r.stage === 5 && !r.step) r.step = 'Pending'; if (r.stage !== 5) { r.step = ''; r.presentedDate = ''; } if (r.stage === 6) { r.onHold = false; r.waitingOn = 'None'; } r.check = false; }
+      if (k === 'step') { r.presentedDate = r.step === 'Presented' ? (r.presentedDate || r.stageDate) : ''; }
+      if (k === 'onHold' && r.onHold && !r.holdReason) r.holdReason = r.waitingOn === 'Client' ? 'Client silent' : 'Other';
+      if (k === 'stageDate' || k === 'presentedDate') { r._estDefault = false; r.estimated = false; }
+      if (['stage', 'step', 'onHold'].indexOf(k) >= 0) { var sy = window.scrollY; drawReview(); window.scrollTo(0, sy); }
+    };
+  });
+  $('#imp').onclick = doImport;
+}
+function doImport() {
+  var mode = $('#mode').value;
+  if (mode === 'replace' && !confirm('Replace everything? All current projects and their timelines will be deleted first.')) return;
+  var b = $('#imp'); b.disabled = true; b.textContent = 'Importing…';
+  api('adminImport', [A.rows, mode, A.defaultDate]).then(function (r) {
+    $('#res').innerHTML = '<div class="hint" style="background:var(--ok-bg);color:var(--ok)">Imported ' + r.imported + ' projects' + (r.skipped ? ' (' + r.skipped + ' skipped)' : '') + '. <a href="./" style="color:var(--ok);font-weight:800">Open the pipeline</a></div>';
+    b.textContent = 'Done'; toast('Imported ' + r.imported + ' projects');
+  }).catch(function (e) { b.disabled = false; b.textContent = 'Import ' + A.rows.length + ' projects'; toast(e.message, true); });
+}
+function doExport() {
+  var b = $('#exp'); b.disabled = true; b.textContent = 'Preparing…';
+  Promise.all([loadXlsx(), api('listProjects')]).then(function (x) {
+    var ps = x[1].projects, st = x[1].config.stages;
+    var head = ['Project ID', 'Client', 'Solution', 'Stage', 'Proposal Step', 'On Hold', 'Hold Reason', 'Waiting On', 'Solution Rev', 'Revision Reason', 'Data Status', 'Pending Data / Items', 'Design Basis', 'Status Note', 'Next Action', 'Next Action Due', 'SE PIC', 'Sales PIC', 'Priority', 'Target Date', 'Stage Date', 'Presented Date', 'Days in Stage', 'Days Since Presented', 'Flags', 'Remarks', 'Last Updated'];
+    var aoa = [head].concat(ps.map(function (p) {
+      return [p.projectId, p.client, p.solution, p.stage + '. ' + st[p.stage], p.step === 'Pending' ? 'Pending to Present' : p.step, p.onHold ? 'Yes' : '', p.holdReason, p.waitingOn, 'v' + p.solutionRev, p.revisionReason, p.dataStatus, p.pendingData, p.designBasis, p.statusNote, p.nextAction, p.nextActionDue, p.sePic, p.salesPic, p.priority, p.targetDate, p.stageDate, p.presentedDate,
+        p.daysInStage === null ? '' : String(p.daysInStage), p.daysSincePresented === null ? '' : String(p.daysSincePresented), (p.flags || []).map(function (f) { return FLAG_LABEL[f]; }).join('; '), p.remarks, p.lastUpdated].map(function (v) { return v === null || v === undefined ? '' : String(v); });
+    }));
+    var ws = XLSX.utils.aoa_to_sheet(aoa); ws['!cols'] = head.map(function (h, i) { return { wch: [10, 22, 24, 22, 18, 8, 16, 14, 8, 24, 10, 24, 24, 40, 36, 12, 10, 10, 9, 11, 11, 11, 8, 10, 26, 30, 11][i] || 14 }; });
+    ws['!autofilter'] = { ref: XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: aoa.length - 1, c: head.length - 1 } }) };
+    var wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Pipeline');
+    XLSX.writeFile(wb, 'Presales_Pipeline_' + todayIso() + '.xlsx');
+    toast('Excel downloaded');
+  }).catch(function (e) { toast(e.message, true); }).then(function () { b.disabled = false; b.textContent = 'Download Excel'; });
+}
+boot();
+</script>
+</body></html>

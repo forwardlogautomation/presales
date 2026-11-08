@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5F7A61">
+<title>Presales Pipeline · Forwardlog</title>
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAYFBMVEVPbVGaq520wrfb4txVVVVNbFB/loP////8/PxqhGxVc1prd22tuq9lZWUAAADP1tBbW1tcemGHmoro7OhObVOLi4tMaUzCzMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjtjjKAAAAGHRSTlOi////A33/Af7+//7//wD/////////Rv+bcddjAAAA9ElEQVR42qWTy3LDIAxFBU5SJPEIj5j//9PK0GaaGRkvehZ4wRksaXQhxrgDqsAul3CLgL06hdoR4g0ieHeKkesd3QLcAdJKSADsljDgWsAplNekuFRKV4TwnATnW/OKwCGwENhZIl3gn1n5U8FdCCENFsLB87UQRhcrwXjvTf9HkX8EeyEwlppMKfZz1OFXaJmSIaFh0l6wmbtvcydpewufS0I45m5a0QX5wUM+nXKuqlCIm3EbZaZ0JmQ+2mEpQhPsEI4T9RocEhM+MstuVdTWPpHUR/loQtZeC85WMhH6GZwIRstl2kbH94vw3r8kvBfx/wZi1iWWldh1rgAAAABJRU5ErkJggg==">
+<link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAYFBMVEWWoJdohGxmdGjT29RdeWBge2O3w7gA/wB+lYJfe2G/ysFkgGY5cjlVqlX/AP/////+/v5XdFpiemTW3NZdemJmZmYAAABcXFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtULo7AAAAGHRSTlP+/hX/0pr/Af9E/7cEAwEB//7+////AP+l/WZQAAAB+0lEQVR42u2X25LCMAiGyaG11sMGEuv7v+lCEttudXeS9GK98HccDyNfgSAFmFgHPU26s1Qs27HFRUwn4Cd/OFrCGgU6HfnCCaD56goRwBcL+PeKvdAC4BerELyrkgdUVghw0GLfu2r1QtAH0BP7b1yDDEcxaZiOTdfPPnAI2iK4RgF2GjShbwV4JA1duwPRBbD7ABZ2RBBjeCsAPEmqRV77MsDtvtGNvxwsog1lALptRDHPREHtA4Q6wCaEagBtklgLuMNTrX0A1aew7u1uXx3c7r4JsNI/AVal7PeWsvlU4lsBcmc2nt/4BkBAq7wbhxDnI7UwSgGEAzd4Ga1EjIE//o3PACJUzpD09ySKwJc3lhceWBnqjGP7kIfEwI/sw6tb2xbAGnr2n8KPMTERim+uBtnrVatRHIipAbADtBrlJDHRhVKAibmbCfFkUFUAPKYDSIQxfSJTDkjVxKeZ4k5nKXZ1gJR6owK1AuK/6hFOFcC/AISaJDoVtoC6Y1xiMFJTCdDXAGa/EUZcIhBa4ag7u5DNc13KqNv93rA2xZwsw5IByU1XPO4DZuMgLQWWcf9aOu9DiC2Jo0A1ztP+lbe20pXHgKLYEvvZKVl5zjVLl8ljx7J0XdrXPshrH++v7Yvn16Ft9TVp9T3L8vxYvk87lu+EqF//dTT9Bqhb++c3Oa4OAAAAAElFTkSuQmCC">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>:root{--brand:#5F7A61;--brand-dk:#475C4A;--brand-lt:#E9F0E9;--brand-ink:#fff;--bg:#F3F5F2;--card:#fff;--ink:#262A27;--grey:#6B6B6B;--muted:#7A807B;--line:#E2E7E2;--ok:#2E7D4F;--ok-bg:#E2F3E8;--bad:#C0392B;--bad-bg:#FBE4E1;--warn:#B7791F;--warn-bg:#FDF1DC;--info:#2A5D9F;--info-bg:#E7F1FB;--radius:14px;--shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(40,60,45,.06)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:3px solid var(--brand);padding:8px max(12px, calc((100% - 900px) / 2 + 12px)) 6px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+header.top .logo{height:58px;width:auto;margin:-4px auto -4px 0;display:block;min-width:60px}
+header.top .logo[src=""]{visibility:hidden}
+header.top .htitle{order:3;flex:1 0 100%;display:flex;align-items:baseline;gap:8px;padding:5px 2px 0;border-top:1px solid var(--line)}
+header.top .app{font-size:10px;font-weight:800;letter-spacing:1.6px;color:var(--brand);text-transform:uppercase}
+header.top h1{font-size:15px;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+header.top .hlink{font-size:13px;font-weight:700;color:var(--brand-dk);text-decoration:none;padding:4px 2px}
+header.top button{background:var(--brand-lt);color:var(--brand-dk);border:0;border-radius:10px;padding:7px 11px;font-weight:700;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+#acct{display:flex;align-items:center;gap:8px}
+#acct .av{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
+#acct .who{line-height:1.15;text-align:right}#acct .who b{display:block;font-size:12.5px}#acct .who span{font-size:11px;color:var(--muted)}
+@media (max-width:640px){#acct .who{display:none}}
+main{max-width:900px;margin:0 auto;padding:14px 12px 120px}
+footer.tag{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.4px;padding:4px 0 22px}footer.tag b{color:var(--brand)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.card h2{font-size:13px;margin:0 0 12px;text-transform:uppercase;letter-spacing:.8px;color:var(--grey);font-weight:700}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:10px 0 5px}
+input,select,textarea{width:100%;font:inherit;font-size:16px;padding:11px 12px;border:1.5px solid #CBD3CB;border-radius:11px;background:#fff;color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(95,122,97,.22)}
+input[type=checkbox],input[type=radio]{width:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:11px;padding:12px 16px;min-height:44px;font:inherit;font-size:15px;font-weight:700;background:var(--brand);color:#fff;cursor:pointer;text-decoration:none}
+.btn:active{transform:scale(.97);filter:brightness(.93)}.btn.sec{background:#EDF1ED;color:var(--ink)}.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}.btn.sm{padding:8px 12px;font-size:13px;min-height:36px}.btn:disabled{opacity:.5}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1 1 150px}.muted{color:var(--muted);font-size:12.5px}.hidden{display:none!important}
+.chip{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.4px;padding:4px 9px;border-radius:999px;background:#ECEFEC;color:#4B524C;text-transform:uppercase;white-space:nowrap}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.bad{background:var(--bad-bg);color:var(--bad)}.chip.warn{background:var(--warn-bg);color:var(--warn)}.chip.brand{background:var(--brand-lt);color:var(--brand-dk)}.chip.info{background:var(--info-bg);color:var(--info)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 0}
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.stat{background:#F7F9F7;border:1.5px solid var(--line);border-radius:12px;padding:9px 2px 8px;text-align:center;cursor:pointer;font:inherit;color:inherit}
+.stat b{display:block;font-size:24px;font-weight:800;line-height:1.1}.stat span{display:block;line-height:1.2;margin-top:3px;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:700;letter-spacing:.2px}
+.stat.on{border-color:var(--brand);background:var(--brand-lt)}
+.stat.me b{color:var(--ok)}.stat.sales b{color:var(--warn)}.stat.client b{color:var(--info)}
+.toolbar{display:flex;gap:8px;margin:12px 0 10px;flex-wrap:wrap;align-items:center}.toolbar input[type=search]{flex:2 1 160px;min-width:0}.toolbar select{flex:1 1 130px;min-width:0}
+.toggle{display:flex;flex:1 0 100%;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--grey);margin:0}
+.list{list-style:none;margin:0;padding:0}
+.list li.pj{background:#fff;border:1px solid var(--line);border-left:5px solid #CBD3CB;border-radius:12px;padding:12px 10px 12px 12px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;cursor:pointer;box-shadow:var(--shadow)}
+.list li.pj.w-me{border-left-color:var(--ok)}.list li.pj.w-sales{border-left-color:#E0A33A}.list li.pj.w-client{border-left-color:#4F8AD1}.list li.pj.w-hold{border-left-color:#9AA19B;background:#FAFBFA}
+.pj .main{flex:1;min-width:0}.pj .t1{font-size:15px}.pj .t1 b{font-weight:700}.pj .clock{font-size:12px;color:var(--grey);margin-top:6px}.pj .na{font-size:13px;color:var(--ink);margin-top:3px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.empty{text-align:center;color:var(--muted);padding:26px 10px}
+details.done{margin-top:14px}details.done summary{cursor:pointer;font-weight:700;color:var(--grey);padding:10px 4px;font-size:13px}
+.stagebar{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+.stagebar button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 1px;font:inherit;font-size:9.5px;font-weight:700;color:var(--grey);cursor:pointer;line-height:1.2;min-height:60px;min-width:0;overflow-wrap:anywhere}
+.stagebar button b{display:block;font-size:15px;color:var(--ink)}
+.stagebar button.on{background:var(--brand);border-color:var(--brand);color:#fff}.stagebar button.on b{color:#fff}
+@media (max-width:480px){.stagebar{grid-template-columns:repeat(3,minmax(0,1fr))}.stagebar button{font-size:11px;min-height:58px}}
+.seg{display:flex;gap:6px;margin-top:10px}.seg button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 6px;font:inherit;font-size:13px;font-weight:700;color:var(--grey);cursor:pointer;min-height:44px}
+.seg button.on{background:var(--brand-lt);border-color:var(--brand);color:var(--brand-dk)}
+dl.facts{display:grid;grid-template-columns:130px 1fr;gap:8px 10px;margin:0}dl.facts dt{font-size:12px;font-weight:600;color:var(--muted)}dl.facts dd{margin:0;word-break:break-word}
+@media (max-width:480px){dl.facts{grid-template-columns:1fr}dl.facts dt{margin-top:6px}}
+.tl{list-style:none;margin:0;padding:0}.tl li{border-left:3px solid var(--line);padding:2px 0 14px 12px;margin-left:5px;position:relative}
+.tl li:before{content:"";position:absolute;left:-8px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--brand)}
+.tl li.undone{opacity:.5}.tl .d{font-size:12px;color:var(--muted)}.tl .n{margin-top:2px;white-space:pre-wrap;word-break:break-word}
+.actionbar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px max(12px, calc((100% - 900px) / 2 + 12px)) calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;z-index:25}
+.actionbar .btn{flex:1;padding:12px 8px}
+.fab{position:fixed;right:max(14px, calc((100% - 900px) / 2 + 14px));bottom:calc(18px + env(safe-area-inset-bottom));z-index:24;box-shadow:0 6px 18px rgba(40,60,45,.35);border-radius:999px;padding:14px 20px}
+.overlay{position:fixed;inset:0;background:rgba(20,28,22,.45);z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom));animation:up .18s ease-out}
+@keyframes up{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet{animation:none}}
+.sheet h3{margin:0 0 4px;font-size:17px}.sheet .sub{color:var(--muted);font-size:13px;margin-bottom:6px}
+.sheet .btns{display:flex;gap:8px;margin-top:16px}.sheet .btns .btn{flex:1}
+.chipsel{display:flex;flex-wrap:wrap;gap:6px}.chipsel button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font:inherit;font-size:13px;font-weight:600;color:var(--grey);cursor:pointer;min-height:40px}
+.chipsel button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.hint{background:var(--info-bg);color:var(--info);border-radius:10px;padding:8px 10px;font-size:12.5px;margin-top:8px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;z-index:60;font-weight:600;max-width:90vw}
+.toast.err{background:var(--bad)}
+#wall{position:fixed;inset:0;z-index:80;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+#wall .box{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:26px 22px;max-width:380px;width:100%;text-align:center}
+#wall img{height:64px;margin-bottom:6px}#wall h2{font-size:17px;margin:6px 0 4px}#wall p{color:var(--muted);font-size:13px;margin:0 0 16px}
+#wall #gbtn{display:flex;justify-content:center;min-height:44px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:10.5px;color:var(--muted);text-transform:uppercase;font-weight:700;white-space:nowrap}
+table select,table input[type=date]{font-size:14px;padding:7px 8px;min-width:130px}
+.tablewrap table{min-width:1020px}
+td select[data-k=stage]{min-width:180px}
+tr.check td{background:var(--warn-bg)}
+@media print{header.top button,.noprint{display:none!important}body{background:#fff}.card{border:0;box-shadow:none}}
+</style>
+</head><body>
+<header class="top">
+  <img class="logo" alt="Forwardlog" src="">
+  <div id="acct"></div>
+  <div class="htitle"><span class="app">Presales</span><h1 id="title">Pipeline</h1><a class="hlink hidden" id="adminlink" href="admin.html">Admin</a></div>
+</header>
+<main id="main"><div class="empty">Loading…</div></main>
+<div id="fabwrap"></div>
+<script>/* ===== Presales Pipeline - shared JS (auth, API, helpers) ===== */
+var API_URL = 'https://script.google.com/macros/s/AKfycbwnhvU7OaqUI4fE5RFm6MbGzwi7ABViYUFMKOriTCzR1ITjvR1K0ScmARxBxE6rRsHD/exec', CLIENT_ID = '91172054296-efavj9to958vrqkdk67pa96fo82466gk.apps.googleusercontent.com', HD = 'forwardlogauto.com';
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+function esc(s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { } return null; }
+var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function fmtDate(iso, withYear) {
+  var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || ''); if (!m) return '';
+  return (+m[3]) + ' ' + MON[+m[2] - 1] + (withYear ? ' ' + m[1] : '');
+}
+function todayIso() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function toast(msg, err) {
+  var t = document.createElement('div'); t.className = 'toast' + (err ? ' err' : ''); t.textContent = msg; document.body.appendChild(t);
+  setTimeout(function () { t.remove(); }, err ? 4500 : 2200);
+}
+
+/* ---- logo (served by the API, cached) ---- */
+function loadLogo() {
+  var imgs = $$('img.logo, #wall img'), c = ls('pp_logo');
+  function set(u) { imgs.forEach(function (i) { i.src = u; }); }
+  if (c) set(c);
+  fetch(API_URL, { method: 'POST', body: JSON.stringify({ fn: 'getLogo', args: [] }), redirect: 'follow', credentials: 'omit' })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j && j.ok && j.result) { ls('pp_logo', j.result); set(j.result); } })
+    .catch(function () { });
+}
+
+/* ---- Google sign-in ---- */
+var _auth = null, _gsi = null, _waiters = [], _renew = null;
+function readAuth() {
+  try { var a = JSON.parse(ls('pp_auth') || 'null'); if (a && a.token && a.exp - Date.now() > 60000) return a; } catch (e) { }
+  return null;
+}
+function loadGsi() {
+  if (_gsi) return _gsi;
+  _gsi = new Promise(function (res, rej) {
+    if (window.google && google.accounts && google.accounts.id) return res();
+    var s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+    s.onload = function () { res(); }; s.onerror = function () { _gsi = null; rej(new Error('Could not load Google sign-in')); };
+    document.head.appendChild(s);
+  }).then(function () {
+    google.accounts.id.initialize({ client_id: CLIENT_ID, callback: onCredential, auto_select: true, hd: HD, use_fedcm_for_prompt: true });
+  });
+  return _gsi;
+}
+function decodeJwt(t) {
+  var p = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+  return JSON.parse(decodeURIComponent(escape(atob(p + '==='.slice((p.length + 3) % 4)))));
+}
+function onCredential(resp) {
+  try {
+    var p = decodeJwt(resp.credential);
+    if (p.hd !== HD) { toast('Please sign in with your @' + HD + ' account', true); return; }
+    _auth = { token: resp.credential, exp: p.exp * 1000, name: p.name || p.email, email: p.email, picture: p.picture || '' };
+    ls('pp_auth', JSON.stringify(_auth));
+    var w = $('#wall'); if (w) w.remove();
+    scheduleRenew(); renderChip();
+    var q = _waiters; _waiters = []; q.forEach(function (f) { f(_auth); });
+  } catch (e) { toast('Sign-in failed. Try again.', true); }
+}
+function scheduleRenew() {
+  clearTimeout(_renew);
+  var ms = Math.max(15000, _auth.exp - Date.now() - 5 * 60000);
+  _renew = setTimeout(function () { loadGsi().then(function () { google.accounts.id.prompt(); }).catch(function () { }); }, ms);
+}
+function showWall() {
+  if ($('#wall')) return;
+  var d = document.createElement('div'); d.id = 'wall';
+  d.innerHTML = '<div class="box"><img alt="Forwardlog" src="' + esc(ls('pp_logo') || '') + '"><h2>Presales Pipeline</h2><p>Sign in with your @' + HD + ' Google account to continue.</p><div id="gbtn"></div><p id="wallerr" class="muted" style="margin:12px 0 0"></p></div>';
+  document.body.appendChild(d);
+  loadGsi().then(function () {
+    google.accounts.id.renderButton($('#gbtn'), { theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', width: 260 });
+    google.accounts.id.prompt();
+  }).catch(function (e) { $('#wallerr').textContent = e.message + '. Check your connection and reload.'; });
+}
+function requireLogin() {
+  _auth = readAuth();
+  if (_auth) { scheduleRenew(); renderChip(); return Promise.resolve(_auth); }
+  return new Promise(function (res) { _waiters.push(res); showWall(); });
+}
+function signOut() {
+  if (!confirm('Sign out of Presales Pipeline?')) return;
+  ls('pp_auth', null); _auth = null;
+  loadGsi().then(function () { google.accounts.id.disableAutoSelect(); }).catch(function () { }).then(function () { location.reload(); });
+}
+function renderChip() {
+  var a = $('#acct'); if (!a || !_auth) return;
+  var ini = (_auth.name || '?').split(/\s+/).map(function (x) { return x[0]; }).join('').slice(0, 2).toUpperCase();
+  a.innerHTML = '<div class="av">' + esc(ini) + '</div><div class="who"><b>' + esc(_auth.name) + '</b><span>' + esc(_auth.email) + '</span></div><button id="so">Sign out</button>';
+  $('#so').onclick = signOut;
+}
+
+/* ---- API ---- */
+function api(fn, args) {
+  var a = _auth || readAuth();
+  if (!a) { _auth = null; return requireLogin().then(function () { return api(fn, args); }); }
+  return fetch(API_URL, { method: 'POST', body: JSON.stringify({ fn: fn, args: args || [], token: a.token }), redirect: 'follow', credentials: 'omit' })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j.ok) return j.result;
+      if (j.error === 'LOGIN_REQUIRED') { ls('pp_auth', null); _auth = null; return requireLogin().then(function () { return api(fn, args); }); }
+      throw new Error(j.error || 'Request failed');
+    });
+}
+
+/* ---- bottom sheet ---- */
+function openSheet(html, onClose) {
+  var o = document.createElement('div'); o.className = 'overlay';
+  o.innerHTML = '<div class="sheet" role="dialog">' + html + '</div>';
+  function close() { o.remove(); if (onClose) onClose(); }
+  o.addEventListener('mousedown', function (e) { if (e.target === o) close(); });
+  document.body.appendChild(o);
+  o.close = close;
+  return o;
+}
+
+/* ---- labels shared by pages ---- */
+function waitClass(p) {
+  if (p.stage === 6) return 'done';
+  if (p.onHold) return 'hold';
+  return { Me: 'me', Sales: 'sales', Client: 'client' }[p.waitingOn] || '';
+}
+function waitChip(p) {
+  if (p.stage === 6 || !p.waitingOn || p.waitingOn === 'None') return '';
+  var cls = { Me: 'ok', Sales: 'warn', Client: 'info' }[p.waitingOn] || '';
+  return '<span class="chip ' + cls + '">' + (p.waitingOn === 'Me' ? 'Me' : 'Waiting: ' + esc(p.waitingOn)) + '</span>';
+}
+var FLAG_LABEL = { MOVE_HOLD: 'Move to On Hold?', REVIEW: 'Review: still worth keeping?', MISSING: 'Missing info' };
+function flagChips(p) {
+  return (p.flags || []).map(function (f) { return '<span class="chip ' + (f === 'REVIEW' ? 'bad' : f === 'MISSING' ? '' : 'warn') + '">' + FLAG_LABEL[f] + '</span>'; }).join('');
+}
+function ago(n) { return n === null || n === undefined ? '' : (n === 0 ? 'today' : n + 'd'); }
+function footerHtml() { return '<footer class="tag"><b>FORWARDLOG</b> \u00b7 Endless Flexibility In Automation</footer>'; }
+</script>
+<script>
+var S = { projects: [], cfg: null, tab: 'plate', q: '', stageF: '', flagOnly: false, cur: null };
+function stageName(n) { return S.cfg.stages[n]; }
+function loadCfg() { return S.cfg ? Promise.resolve(S.cfg) : api('getConfig').then(function (c) { S.cfg = c; if (c.isAdmin) $('#adminlink').classList.remove('hidden'); return c; }); }
+
+function boot() { loadLogo(); requireLogin().then(function () { return loadCfg(); }).then(route).catch(function (e) { toast(e.message, true); }); window.addEventListener('hashchange', route); }
+function route() { var m = /^#p=(.+)$/.exec(location.hash); if (m) showProject(decodeURIComponent(m[1])); else showList(); }
+
+/* ================= LIST ================= */
+function showList() {
+  $('#title').textContent = 'Pipeline'; $('#fabwrap').innerHTML = '';
+  if (!S.projects.length) $('#main').innerHTML = '<div class="empty">Loading…</div>';
+  api('listProjects').then(function (r) { S.projects = r.projects; S.cfg = r.config; if (r.config.isAdmin) $('#adminlink').classList.remove('hidden'); renderList(); })
+    .catch(function (e) { $('#main').innerHTML = '<div class="empty">' + esc(e.message) + '</div>'; toast(e.message, true); });
+}
+function buckets() {
+  var b = { plate: [], sales: [], client: [], internal: [], hold: [] };
+  S.projects.forEach(function (p) {
+    if (p.stage === 6) return;
+    if (p.onHold) b.hold.push(p); else if (p.ball === 'Me') b.plate.push(p); else if (p.ball === 'Sales') b.sales.push(p); else if (p.ball === 'Client') b.client.push(p); else b.internal.push(p);
+  });
+  return b;
+}
+function sortList(a) {
+  return a.slice().sort(function (x, y) {
+    var fx = x.flags.length ? 0 : 1, fy = y.flags.length ? 0 : 1; if (fx !== fy) return fx - fy;
+    var dx = x.daysInStage === null ? -1 : x.daysInStage, dy = y.daysInStage === null ? -1 : y.daysInStage; if (dx !== dy) return dy - dx;
+    return x.client.localeCompare(y.client);
+  });
+}
+function clockText(p) {
+  if (p.stage === 6) return 'Handed over' + (p.stageDate ? ' ' + fmtDate(p.stageDate) : '');
+  if (p.onHold) return 'On hold ' + ago(p.daysOnHold) + (p.holdReason ? ' \u00b7 ' + esc(p.holdReason) : '');
+  if (p.stage === 5 && p.step === 'Presented') return 'Presented ' + ago(p.daysSincePresented) + (p.daysSincePresented ? ' ago' : '') + (p.estimated ? ' (est.)' : '');
+  if (p.stage === 5) return 'Pending to present \u00b7 ' + ago(p.daysInStage);
+  return (p.daysInStage === null ? 'No stage date' : ago(p.daysInStage) + ' in stage') + (p.estimated ? ' (est.)' : '');
+}
+function cardHtml(p) {
+  var chips = '<span class="chip brand">' + esc(p.stage + ' ' + p.stageName) + '</span>';
+  if (p.stage === 5 && p.step) chips += '<span class="chip ' + (p.step === 'Presented' ? 'info' : 'warn') + '">' + (p.step === 'Presented' ? 'Presented' : 'Pending to present') + '</span>';
+  if (p.onHold) chips += '<span class="chip">On hold</span>'; else chips += waitChip(p);
+  if (p.solutionRev > 1) chips += '<span class="chip">v' + p.solutionRev + '</span>';
+  chips += flagChips(p);
+  var na = p.nextAction || p.statusNote || '';
+  return '<li class="pj w-' + waitClass(p) + '" data-id="' + esc(p.id) + '"><div class="main"><div class="t1"><b>' + esc(p.client) + '</b> <span class="muted">' + esc(p.solution) + (p.projectId ? ' \u00b7 #' + esc(p.projectId) : '') + '</span></div><div class="chips">' + chips + '</div><div class="clock">' + clockText(p) + '</div>' + (na ? '<div class="na">' + (p.nextAction ? 'Next: ' : '') + esc(na) + '</div>' : '') + '</div>' +
+    (p.stage < 6 ? '<button class="btn sm sec mv" data-id="' + esc(p.id) + '">Move</button>' : '') + '</li>';
+}
+function renderList() {
+  var b = buckets(), q = S.q.trim().toLowerCase(), live = S.projects.filter(function (p) { return p.stage < 6; });
+  var done = S.projects.filter(function (p) { return p.stage === 6; });
+  var flagged = live.filter(function (p) { return p.flags.length; }).length;
+  var tiles = [['plate', 'My plate', 'me'], ['sales', 'Sales', 'sales'], ['client', 'Client', 'client'], ['internal', 'Internal', ''], ['hold', 'On hold', '']];
+  var h = '<div class="card"><div class="stats">' + tiles.map(function (t) { return '<button class="stat ' + t[2] + (S.tab === t[0] ? ' on' : '') + '" data-tab="' + t[0] + '"><b>' + b[t[0]].length + '</b><span>' + t[1] + '</span></button>'; }).join('') + '</div>' +
+    '<div class="muted" style="margin-top:10px">' + live.length + ' live projects \u00b7 ' + (flagged ? flagged + ' flagged' : 'nothing flagged') + ' \u00b7 <a href="#" id="showall" style="color:var(--brand-dk);font-weight:700">' + (S.tab === 'all' ? 'Showing all' : 'Show all live') + '</a></div></div>';
+  h += '<div class="toolbar"><input id="q" type="search" placeholder="Search client, solution or project ID" value="' + esc(S.q) + '"><select id="sf"><option value="">All stages</option>' +
+    [1, 2, 3, 4, 5, 6].map(function (n) { return '<option value="' + n + '"' + (String(S.stageF) === String(n) ? ' selected' : '') + '>' + n + ' ' + esc(stageName(n)) + '</option>'; }).join('') + '</select>' +
+    '<label class="toggle"><input type="checkbox" id="fo"' + (S.flagOnly ? ' checked' : '') + '> Flagged only (' + flagged + ')</label></div>';
+  var list;
+  if (q) list = S.projects.filter(function (p) { return (p.client + ' ' + p.solution + ' ' + p.projectId + ' ' + p.salesPic).toLowerCase().indexOf(q) >= 0; });
+  else list = S.tab === 'all' ? live : b[S.tab];
+  if (S.stageF) list = list.filter(function (p) { return String(p.stage) === String(S.stageF); });
+  if (S.flagOnly) list = list.filter(function (p) { return p.flags.length; });
+  var live2 = sortList(list.filter(function (p) { return p.stage < 6; })), done2 = list.filter(function (p) { return p.stage === 6; });
+  h += live2.length ? '<ul class="list">' + live2.map(cardHtml).join('') + '</ul>' : '<div class="empty">' + (q ? 'No project matches your search.' : 'Nothing here. Tap another tile or add a project.') + '</div>';
+  var doneList = q ? done2 : (S.flagOnly || (S.stageF && String(S.stageF) !== '6') ? [] : done);
+  if (doneList.length) h += '<details class="done"' + (q || String(S.stageF) === '6' ? ' open' : '') + '><summary>Won \u2013 Handed Over (' + doneList.length + ')</summary><ul class="list">' + doneList.slice().sort(function (x, y) { return x.client.localeCompare(y.client); }).map(cardHtml).join('') + '</ul></details>';
+  h += footerHtml();
+  var m = $('#main'); m.innerHTML = h;
+  $$('.stat', m).forEach(function (el) { el.onclick = function () { S.tab = el.dataset.tab; S.q = ''; renderList(); }; });
+  $('#showall', m).onclick = function (e) { e.preventDefault(); S.tab = 'all'; S.q = ''; renderList(); };
+  $('#sf', m).onchange = function () { S.stageF = this.value; renderList(); };
+  $('#fo', m).onchange = function () { S.flagOnly = this.checked; renderList(); };
+  var qi = $('#q', m); qi.oninput = function () { S.q = this.value; var pos = this.selectionStart; renderList(); var n = $('#q'); n.focus(); n.setSelectionRange(pos, pos); };
+  $$('li.pj', m).forEach(function (li) { li.onclick = function (e) { if (e.target.closest('.mv')) return; location.hash = '#p=' + encodeURIComponent(li.dataset.id); }; });
+  $$('.mv', m).forEach(function (bt) { bt.onclick = function (e) { e.stopPropagation(); var p = S.projects.filter(function (x) { return x.id === bt.dataset.id; })[0]; openMove(p, defaultTarget(p), function () { showList(); }); }; });
+  $('#fabwrap').innerHTML = '<button class="btn fab noprint" id="newbtn">+ New project</button>';
+  $('#newbtn').onclick = openNew;
+}
+function defaultTarget(p) { return p.stage < 6 ? p.stage + 1 : 3; }
+
+/* ================= PROJECT PAGE ================= */
+function showProject(id) {
+  $('#fabwrap').innerHTML = ''; $('#main').innerHTML = '<div class="empty">Loading…</div>';
+  loadCfg().then(function () { return api('getProject', [id]); }).then(function (r) { S.cur = r; renderProject(); })
+    .catch(function (e) { toast(e.message, true); location.hash = ''; });
+}
+function fact(k, v) { return v ? '<dt>' + k + '</dt><dd>' + v + '</dd>' : ''; }
+function renderProject() {
+  var p = S.cur.project, tl = S.cur.timeline;
+  $('#title').textContent = p.client;
+  var chips = '<span class="chip brand">' + esc(p.stage + ' ' + p.stageName) + '</span>';
+  if (p.stage === 5 && p.step) chips += '<span class="chip ' + (p.step === 'Presented' ? 'info' : 'warn') + '">' + (p.step === 'Presented' ? 'Presented' : 'Pending to present') + '</span>';
+  chips += p.onHold ? '<span class="chip">On hold' + (p.holdReason ? ': ' + esc(p.holdReason) : '') + '</span>' : waitChip(p);
+  if (p.solutionRev > 1) chips += '<span class="chip">v' + p.solutionRev + '</span>';
+  chips += flagChips(p);
+  var h = '<div class="row noprint" style="margin-bottom:10px"><button class="btn sm sec" id="back" style="flex:0 0 auto">\u2190 Pipeline</button><button class="btn sm sec" id="edit" style="flex:0 0 auto;margin-left:auto">Edit details</button></div>';
+  h += '<div class="card"><div style="font-size:18px;font-weight:800">' + esc(p.client) + '</div><div class="muted">' + esc(p.solution) + (p.projectId ? ' \u00b7 #' + esc(p.projectId) : ' \u00b7 lead, no project ID yet') + '</div><div class="chips">' + chips + '</div><div class="clock muted" style="margin-top:8px">' + clockText(p) + '</div></div>';
+  h += '<div class="card"><h2>Stage</h2><div class="stagebar">' + [1, 2, 3, 4, 5, 6].map(function (n) { return '<button data-to="' + n + '" class="' + (n === p.stage ? 'on' : '') + '"><b>' + n + '</b>' + esc(S.cfg.stages[n]).replace(' \u2013 ', '<br>') + '</button>'; }).join('') + '</div>';
+  if (p.stage === 5) h += '<div class="seg"><button data-step="Pending" class="' + (p.step === 'Pending' ? 'on' : '') + '">Pending to present</button><button data-step="Presented" class="' + (p.step === 'Presented' ? 'on' : '') + '">Presented</button></div>';
+  h += '<div class="muted" style="margin-top:8px">Tap any stage to move there, forward or back.</div></div>';
+  var f = '';
+  f += fact('Waiting on', p.stage === 6 ? '' : esc(p.waitingOn));
+  if (p.stage < 6) {
+    f += fact('Days in stage', p.daysInStage === null ? '' : p.daysInStage + (p.estimated ? ' (estimated date)' : ''));
+    if (p.stage === 5) { f += fact('Days pending to present', p.daysPendingToPresent === null ? '' : String(p.daysPendingToPresent)); f += fact('Days since presented', p.daysSincePresented === null ? '' : String(p.daysSincePresented)); }
+  }
+  f += fact('Status note', esc(p.statusNote)); f += fact('Next action', esc(p.nextAction) + (p.nextActionDue ? ' <span class="muted">(due ' + fmtDate(p.nextActionDue) + ')</span>' : ''));
+  f += fact('Data status', esc(p.dataStatus)); f += fact('Pending data', esc(p.pendingData)); f += fact('Design basis', esc(p.designBasis));
+  f += fact('Solution version', 'v' + p.solutionRev + (p.revisionReason ? ' \u00b7 ' + esc(p.revisionReason) : ''));
+  f += fact('SE PIC', esc(p.sePic)); f += fact('Sales PIC', esc(p.salesPic)); f += fact('Priority', esc(p.priority)); f += fact('Target date', fmtDate(p.targetDate, true));
+  f += fact('Remarks', esc(p.remarks)); f += fact('Last updated', fmtDate(p.lastUpdated, true) + (p.updatedBy ? ' \u00b7 ' + esc(p.updatedBy) : ''));
+  h += '<div class="card"><h2>Details</h2><dl class="facts">' + f + '</dl></div>';
+  h += '<div class="card"><h2>Timeline</h2>' + (tl.length ? '<ul class="tl">' + tl.map(function (t, i) {
+    var lab = { create: 'Added', move: 'Moved', revision: 'Revision', step: 'Proposal step', hold: 'On hold', revive: 'Revived', update: 'Update', edit: 'Edited', import: 'Imported', undo: 'Undo' }[t.type] || t.type;
+    var arrow = t.fromStage && t.toStage && String(t.fromStage) !== String(t.toStage) ? ' \u00b7 ' + esc(S.cfg.stages[t.fromStage]) + ' \u2192 ' + esc(S.cfg.stages[t.toStage]) : '';
+    return '<li class="' + (t.undone ? 'undone' : '') + '"><div class="d">' + fmtDate(t.date, true) + ' \u00b7 <b>' + lab + '</b>' + arrow + (t.user ? ' \u00b7 ' + esc(t.user) : '') + (t.undone ? ' \u00b7 undone' : '') + '</div>' + (t.note ? '<div class="n">' + esc(t.note) + '</div>' : '') +
+      (i === 0 && t.canUndo ? '<button class="btn sm sec" id="undo" style="margin-top:6px">Undo this</button>' : '') + '</li>';
+  }).join('') + '</ul>' : '<div class="empty">No history yet.</div>') + '</div>' + footerHtml();
+  $('#main').innerHTML = h;
+  $('#fabwrap').innerHTML = '<div class="actionbar noprint"><button class="btn" id="upd">Add update</button><button class="btn sec" id="mvb">Move stage</button>' +
+    (p.stage < 6 ? '<button class="btn sec" id="holdb">' + (p.onHold ? 'Revive' : 'On hold') + '</button>' : '') + '</div>';
+  var reload = function () { S.projects = []; showProject(p.id); };
+  $('#back').onclick = function () { location.hash = ''; };
+  $('#edit').onclick = function () { openEdit(p, reload); };
+  $$('.stagebar button').forEach(function (bt) { bt.onclick = function () { var to = +bt.dataset.to; if (to === p.stage) { toast('Already at this stage'); return; } openMove(p, to, reload); }; });
+  $$('.seg [data-step]').forEach(function (bt) { bt.onclick = function () { if (bt.dataset.step !== p.step) openStep(p, bt.dataset.step, reload); }; });
+  $('#upd').onclick = function () { openUpdate(p, reload); };
+  $('#mvb').onclick = function () { openMove(p, defaultTarget(p), reload); };
+  if ($('#holdb')) $('#holdb').onclick = function () { p.onHold ? openRevive(p, reload) : openHold(p, reload); };
+  if ($('#undo')) $('#undo').onclick = function () {
+    if (!confirm('Undo the latest change?')) return;
+    api('undoLast', [p.id]).then(function () { toast('Undone'); reload(); }).catch(function (e) { toast(e.message, true); });
+  };
+}
+
+/* ================= SHEETS ================= */
+function opts(list, sel) { return list.map(function (x) { return '<option' + (x === sel ? ' selected' : '') + '>' + esc(x) + '</option>'; }).join(''); }
+function submitBtn(o, label, fn, after) {
+  var b = $('#go', o); b.onclick = function () {
+    b.disabled = true; var prev = b.textContent; b.textContent = 'Saving…';
+    Promise.resolve().then(fn).then(function () { o.close(); toast(label + ' saved'); if (after) after(); })
+      .catch(function (e) { b.disabled = false; b.textContent = prev; toast(e.message, true); });
+  };
+  $('#cx', o).onclick = function () { o.close(); };
+}
+
+function openMove(p, to, after) {
+  var cfg = S.cfg, m = { to: to, step: 'Pending', pd: todayIso(), date: todayIso(), mode: 'revision', rt: 0, reason: '', waiting: '', note: '' };
+  var o = openSheet('<div id="mv"></div>');
+  function draw() {
+    var back = m.to < p.stage, rev = back && m.mode === 'revision';
+    var defWait = m.to === 5 ? (m.step === 'Presented' ? 'Client' : 'Sales') : cfg.defaultWaiting[m.to];
+    var h = '<h3>Move ' + esc(p.client) + '</h3><div class="sub">Now: ' + esc(p.stage + ' ' + p.stageName) + (p.stage === 5 && p.step ? ' (' + p.step + ')' : '') + '</div>';
+    h += '<label>Move to</label><div class="chipsel" id="tochips">' + [1, 2, 3, 4, 5, 6].map(function (n) { return '<button data-to="' + n + '" class="' + (n === m.to ? 'on' : '') + '">' + n + ' ' + esc(cfg.stages[n]) + '</button>'; }).join('') + '</div>';
+    if (m.to === 5) {
+      h += '<label>Proposal step</label><div class="seg" id="stepseg"><button data-s="Pending" class="' + (m.step === 'Pending' ? 'on' : '') + '">Pending to present</button><button data-s="Presented" class="' + (m.step === 'Presented' ? 'on' : '') + '">Presented</button></div>';
+      if (m.step === 'Presented') h += '<label>Presented date</label><input type="date" id="pd" value="' + esc(m.pd) + '">';
+    }
+    h += '<label>Date of this move</label><input type="date" id="dt" value="' + esc(m.date) + '">';
+    if (back) h += '<label>This move is a</label><div class="seg" id="modeseg"><button data-m="revision" class="' + (m.mode === 'revision' ? 'on' : '') + '">Revision</button><button data-m="correction" class="' + (m.mode === 'correction' ? 'on' : '') + '">Correction</button></div><div class="muted" style="margin-top:6px">Revision: the client asked for changes, so the version goes up. Correction: fixing a wrong stage, no new version.</div>';
+    if (rev) {
+      var rts = cfg.revisionTypes;
+      h += '<label>Revision type</label><select id="rt">' + rts.map(function (t, i) { return '<option value="' + i + '"' + (i === m.rt ? ' selected' : '') + '>' + esc(t.label) + '</option>'; }).join('') + '</select>';
+      if (rts[m.rt].stage !== m.to) h += '<div class="hint">This type of revision usually goes back to stage ' + rts[m.rt].stage + ' (' + esc(cfg.stages[rts[m.rt].stage]) + ').</div>';
+      h += '<label>Reason</label><input id="rs" placeholder="What did the client ask for?" value="' + esc(m.reason) + '">';
+    }
+    h += '<label>Waiting on</label><select id="wo">' + opts(cfg.waitingOn, m.waiting || defWait) + '</select>';
+    h += '<label>Note (optional)</label><textarea id="nt" placeholder="Rough notes are fine">' + esc(m.note) + '</textarea>';
+    h += '<div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Move</button></div>';
+    var box = $('#mv', o); box.innerHTML = h;
+    $$('#tochips button', box).forEach(function (b) { b.onclick = function () { m.to = +b.dataset.to; m.waiting = ''; draw(); }; });
+    $$('#stepseg button', box).forEach(function (b) { b.onclick = function () { m.step = b.dataset.s; m.waiting = ''; draw(); }; });
+    $$('#modeseg button', box).forEach(function (b) { b.onclick = function () { m.mode = b.dataset.m; draw(); }; });
+    if ($('#rt', box)) $('#rt', box).onchange = function () { m.rt = +this.value; draw(); };
+    var bind = function (id, key) { var el = $('#' + id, box); if (el) el.oninput = function () { m[key] = this.value; }; };
+    bind('pd', 'pd'); bind('dt', 'date'); bind('rs', 'reason'); bind('wo', 'waiting'); bind('nt', 'note');
+    submitBtn(o, 'Move', function () {
+      if (m.to === p.stage) throw new Error('Pick a different stage');
+      if (rev && !m.reason.trim()) throw new Error('Give a short reason for the revision');
+      return api('moveStage', [p.id, m.to, { date: m.date, step: m.step, presentedDate: m.pd, isRevision: rev, revisionType: rev ? cfg.revisionTypes[m.rt].label : '', revisionReason: m.reason, waitingOn: m.waiting || defWait, note: m.note, rawNote: m.note }]);
+    }, after);
+  }
+  draw();
+}
+function openStep(p, step, after) {
+  var o = openSheet('<h3>' + (step === 'Presented' ? 'Mark as presented' : 'Back to pending to present') + '</h3><div class="sub">' + esc(p.client) + '</div><label>' + (step === 'Presented' ? 'Presented date' : 'Date') + '</label><input type="date" id="dt" value="' + todayIso() + '"><label>Note (optional)</label><textarea id="nt" placeholder="e.g. Presented to client, deck sent"></textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Save</button></div>');
+  submitBtn(o, 'Step', function () { return api('setStep', [p.id, step, { date: $('#dt', o).value, note: $('#nt', o).value, rawNote: $('#nt', o).value }]); }, after);
+}
+function openHold(p, after) {
+  var o = openSheet('<h3>Put on hold</h3><div class="sub">' + esc(p.client) + ' keeps its stage, so reviving puts it back where it was.</div><label>Reason</label><div class="chipsel" id="rs">' + S.cfg.holdReasons.map(function (r, i) { return '<button data-r="' + esc(r) + '"' + (i === 0 ? ' class="on"' : '') + '>' + esc(r) + '</button>'; }).join('') + '</div><label>Date</label><input type="date" id="dt" value="' + todayIso() + '"><label>Note (optional)</label><textarea id="nt"></textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Put on hold</button></div>');
+  var reason = S.cfg.holdReasons[0];
+  $$('#rs button', o).forEach(function (b) { b.onclick = function () { reason = b.dataset.r; $$('#rs button', o).forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
+  submitBtn(o, 'Hold', function () { return api('setHold', [p.id, true, { reason: reason, date: $('#dt', o).value, note: $('#nt', o).value, rawNote: $('#nt', o).value }]); }, after);
+}
+function openRevive(p, after) {
+  var o = openSheet('<h3>Revive project</h3><div class="sub">' + esc(p.client) + ' returns to ' + esc(p.stage + ' ' + p.stageName) + '. The idle-days clock restarts today.</div><label>Date</label><input type="date" id="dt" value="' + todayIso() + '"><label>Note (optional)</label><textarea id="nt" placeholder="Why is it back?"></textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Revive</button></div>');
+  submitBtn(o, 'Revive', function () { return api('setHold', [p.id, false, { date: $('#dt', o).value, note: $('#nt', o).value, rawNote: $('#nt', o).value }]); }, after);
+}
+function openUpdate(p, after) {
+  var o = openSheet('<h3>Add update</h3><div class="sub">' + esc(p.client) + ' \u00b7 ' + esc(p.solution) + '</div><label>What happened?</label><textarea id="nt" placeholder="Type it your way, short is fine"></textarea><label>Next action</label><input id="na" value="' + esc(p.nextAction) + '" placeholder="What is the next step?"><div class="row"><div><label>Next action due</label><input type="date" id="nd" value="' + esc(p.nextActionDue) + '"></div><div><label>Date of update</label><input type="date" id="dt" value="' + todayIso() + '"></div></div><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Save update</button></div>');
+  submitBtn(o, 'Update', function () { var n = $('#nt', o).value; return api('addUpdate', [p.id, { note: n, rawNote: n, nextAction: $('#na', o).value, nextActionDue: $('#nd', o).value, date: $('#dt', o).value }]); }, after);
+}
+function openEdit(p, after) {
+  var c = S.cfg;
+  var o = openSheet('<h3>Edit details</h3><div class="sub">Stage changes are done with Move stage, so they stay in the timeline.</div>' +
+    '<label>Client</label><input id="f_client" value="' + esc(p.client) + '"><label>Solution</label><input id="f_solution" value="' + esc(p.solution) + '"><label>Project ID</label><input id="f_projectId" value="' + esc(p.projectId) + '" placeholder="Leave blank for a lead">' +
+    '<div class="row"><div><label>Waiting on</label><select id="f_waitingOn">' + opts(c.waitingOn, p.waitingOn) + '</select></div><div><label>Priority</label><select id="f_priority"><option></option>' + opts(c.priority, p.priority) + '</select></div></div>' +
+    '<div class="row"><div><label>Data status</label><select id="f_dataStatus"><option></option>' + opts(c.dataStatus, p.dataStatus) + '</select></div><div><label>Target date</label><input type="date" id="f_targetDate" value="' + esc(p.targetDate) + '"></div></div>' +
+    '<label>Pending data / items</label><input id="f_pendingData" value="' + esc(p.pendingData) + '"><label>Design basis</label><input id="f_designBasis" value="' + esc(p.designBasis) + '">' +
+    '<div class="row"><div><label>SE PIC</label><input id="f_sePic" value="' + esc(p.sePic) + '"></div><div><label>Sales PIC</label><input id="f_salesPic" value="' + esc(p.salesPic) + '"></div></div>' +
+    '<label>Remarks</label><textarea id="f_remarks">' + esc(p.remarks) + '</textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Save details</button></div>');
+  submitBtn(o, 'Details', function () {
+    var f = { id: p.id }; ['client', 'solution', 'projectId', 'waitingOn', 'priority', 'dataStatus', 'targetDate', 'pendingData', 'designBasis', 'sePic', 'salesPic', 'remarks'].forEach(function (k) { f[k] = $('#f_' + k, o).value; });
+    return api('saveProject', [f]);
+  }, after);
+}
+function openNew() {
+  var c = S.cfg, step = 'Pending';
+  var o = openSheet('<h3>New project</h3><div class="sub">Add a project or lead. You can fill the rest later.</div><label>Client</label><input id="n_client" placeholder="Client name"><label>Solution</label><input id="n_solution" placeholder="e.g. Wheel sorter"><label>Project ID (optional)</label><input id="n_projectId" placeholder="Leave blank for a lead">' +
+    '<label>Starting stage</label><select id="n_stage">' + [1, 2, 3, 4, 5, 6].map(function (n) { return '<option value="' + n + '"' + (n === 1 ? ' selected' : '') + '>' + n + ' ' + esc(c.stages[n]) + '</option>'; }).join('') + '</select><div id="n_step"></div>' +
+    '<div class="row"><div><label>Sales PIC</label><input id="n_salesPic"></div><div><label>Date</label><input type="date" id="n_date" value="' + todayIso() + '"></div></div><label>Note (optional)</label><textarea id="n_note"></textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Add project</button></div>');
+  var sel = $('#n_stage', o);
+  sel.onchange = function () {
+    $('#n_step', o).innerHTML = +sel.value === 5 ? '<label>Proposal step</label><div class="seg"><button data-s="Pending" class="on">Pending to present</button><button data-s="Presented">Presented</button></div>' : '';
+    step = 'Pending'; $$('#n_step button', o).forEach(function (b) { b.onclick = function () { step = b.dataset.s; $$('#n_step button', o).forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
+  };
+  submitBtn(o, 'Project', function () {
+    var v = function (k) { return $('#n_' + k, o).value; };
+    return api('saveProject', [{ client: v('client'), solution: v('solution'), projectId: v('projectId'), stage: +v('stage'), step: step, salesPic: v('salesPic'), date: v('date'), presentedDate: v('date'), statusNote: v('note') }])
+      .then(function (r) { S.projects = []; location.hash = '#p=' + encodeURIComponent(r.id); });
+  });
+}
+boot();
+</script>
+</body></html>
