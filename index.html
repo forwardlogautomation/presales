@@ -108,6 +108,7 @@ tr.check td{background:var(--warn-bg)}
 .bc .na{font-size:12.5px;margin-top:3px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 main.wide{max-width:none}
 .fbar{flex-wrap:nowrap;overflow-x:auto;margin:0 0 10px;padding-bottom:4px;scrollbar-width:none}.fbar::-webkit-scrollbar{display:none}.fbar button{white-space:nowrap;flex:none}
+header.top.wide{padding-left:12px;padding-right:12px}
 .pj .t1 b,.bc b{text-transform:uppercase}
 .toggles{display:flex;gap:18px;flex:1 0 100%;flex-wrap:wrap}.toggles .toggle{flex:0 0 auto}
 @media (max-width:700px){.board{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(84vw,340px);scroll-snap-type:x mandatory;margin:0 -12px;padding:0 12px 12px;scroll-padding:0 12px}.bcol{scroll-snap-align:start}}</style>
@@ -416,6 +417,7 @@ function sortStage(a) {
 }
 function renderList() {
   $('#main').classList.toggle('wide', S.view === 'board');
+  document.querySelector('header.top').classList.toggle('wide', S.view === 'board');
   if (S.view === 'board') renderListBoard(); else renderListStage();
 }
 function renderListStage() {
@@ -500,6 +502,7 @@ function defaultTarget(p) { return p.stage < 6 ? p.stage + 1 : 3; }
 /* ================= PROJECT PAGE ================= */
 function showProject(id) {
   $('#main').classList.remove('wide');
+  document.querySelector('header.top').classList.remove('wide');
   $('#fabwrap').innerHTML = ''; $('#main').innerHTML = '<div class="empty">Loading…</div>';
   loadCfg().then(function () { return api('getProject', [id]); }).then(function (r) { S.cur = r; renderProject(); })
     .catch(function (e) { toast(e.message, true); location.hash = ''; });
