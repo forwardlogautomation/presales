@@ -22,7 +22,7 @@ header.top .hlink{font-size:13px;font-weight:700;color:var(--brand-dk);text-deco
 header.top button{background:var(--brand-lt);color:var(--brand-dk);border:0;border-radius:10px;padding:7px 11px;font-weight:700;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 #acct{display:flex;align-items:center;gap:8px}
 #acct .av{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
-#acct .who{line-height:1.15;text-align:right}#acct .who b{display:block;font-size:12.5px}#acct .who span{display:block;font-size:11px;color:var(--muted)} #acct button{margin-left:2px} header.top .htitle{min-height:33px;box-sizing:border-box} header.top .htitle .app{line-height:14.5px} header.top .htitle h1{line-height:21.75px} header.top .htitle .hlink{align-self:center}
+#acct .who{line-height:1.15;text-align:right}#acct .who b{display:block;font-size:12.5px}#acct .who span{display:block;font-size:11px;color:var(--muted)} #acct button{margin-left:2px} header.top .htitle{min-height:33px;box-sizing:border-box} header.top .htitle .app{line-height:14.5px} header.top .htitle h1{line-height:21.75px} header.top .htitle .hlink{align-self:center} #n_client,#n_solution,#f_client,#f_solution{text-transform:uppercase}
 @media (max-width:640px){#acct .who{display:none}}
 main{max-width:900px;margin:0 auto;padding:14px 12px 120px}
 footer.tag{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.4px;padding:4px 0 22px}footer.tag b{color:var(--brand)}
@@ -358,7 +358,7 @@ function route() { var m = /^#p=(.+)$/.exec(location.hash); if (m) showProject(d
 function showList() {
   $('#title').textContent = 'Pipeline'; $('#fabwrap').innerHTML = '';
   if (!S.projects.length) $('#main').innerHTML = '<div class="empty">Loading…</div>';
-  api('listProjects').then(function (r) { S.projects = r.projects; S.cfg = r.config; if (r.config.isAdmin) $('#adminlink').classList.remove('hidden'); renderList(); })
+  api('listProjects').then(function (r) { S.projects = r.projects.map(capNames); S.cfg = r.config; if (r.config.isAdmin) $('#adminlink').classList.remove('hidden'); renderList(); })
     .catch(function (e) { $('#main').innerHTML = '<div class="empty">' + esc(e.message) + '</div>'; toast(e.message, true); });
 }
 function clockText(p) {
@@ -504,9 +504,10 @@ function showProject(id) {
   $('#main').classList.remove('wide');
   document.querySelector('header.top').classList.remove('wide');
   $('#fabwrap').innerHTML = ''; $('#main').innerHTML = '<div class="empty">Loading…</div>';
-  loadCfg().then(function () { return api('getProject', [id]); }).then(function (r) { S.cur = r; renderProject(); })
+  loadCfg().then(function () { return api('getProject', [id]); }).then(function (r) { capNames(r.project); S.cur = r; renderProject(); })
     .catch(function (e) { toast(e.message, true); location.hash = ''; });
 }
+function capNames(p) { p.client = String(p.client || '').toUpperCase(); p.solution = String(p.solution || '').toUpperCase(); return p; }
 function fact(k, v) { return v ? '<dt>' + k + '</dt><dd>' + v + '</dd>' : ''; }
 function renderProject() {
   var p = S.cur.project, tl = S.cur.timeline;
@@ -633,7 +634,7 @@ function openEdit(p, after) {
     '<div class="row"><div><label>SE PIC</label><input id="f_sePic" value="' + esc(p.sePic) + '"></div><div><label>Sales PIC</label><input id="f_salesPic" value="' + esc(p.salesPic) + '"></div></div>' +
     '<label>Remarks</label><textarea id="f_remarks">' + esc(p.remarks) + '</textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Save details</button></div>');
   submitBtn(o, 'Details', function () {
-    var f = { id: p.id }; ['client', 'solution', 'projectId', 'waitingOn', 'priority', 'dataStatus', 'targetDate', 'pendingData', 'designBasis', 'sePic', 'salesPic', 'remarks'].forEach(function (k) { f[k] = $('#f_' + k, o).value; }); f.client = String(f.client).toUpperCase();
+    var f = { id: p.id }; ['client', 'solution', 'projectId', 'waitingOn', 'priority', 'dataStatus', 'targetDate', 'pendingData', 'designBasis', 'sePic', 'salesPic', 'remarks'].forEach(function (k) { f[k] = $('#f_' + k, o).value; }); f.client = String(f.client).toUpperCase(); f.solution = String(f.solution).toUpperCase();
     return api('saveProject', [f]);
   }, after);
 }
@@ -649,7 +650,7 @@ function openNew() {
   };
   submitBtn(o, 'Project', function () {
     var v = function (k) { return $('#n_' + k, o).value; };
-    return api('saveProject', [{ client: v('client').toUpperCase(), solution: v('solution'), projectId: v('projectId'), stage: +v('stage'), step: step, salesPic: v('salesPic'), date: v('date'), presentedDate: v('date'), statusNote: v('note') }])
+    return api('saveProject', [{ client: v('client').toUpperCase(), solution: v('solution').toUpperCase(), projectId: v('projectId'), stage: +v('stage'), step: step, salesPic: v('salesPic'), date: v('date'), presentedDate: v('date'), statusNote: v('note') }])
       .then(function (r) { S.projects = []; location.hash = '#p=' + encodeURIComponent(r.id); });
   });
 }
