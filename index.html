@@ -89,6 +89,7 @@ table select,table input[type=date]{font-size:14px;padding:7px 8px;min-width:130
 td select[data-k=stage]{min-width:180px}
 tr.check td{background:var(--warn-bg)}
 @media print{header.top button,.noprint{display:none!important}body{background:#fff}.card{border:0;box-shadow:none}}
+header.top .logolink{display:block;flex:0 0 auto;margin-right:auto;line-height:0;cursor:pointer;border-radius:6px}header.top .logolink .logo{margin-left:0;margin-right:0}header.top .logolink:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 </style>
 <style>.seg.viewsw{margin:0 0 12px}
 .sechead{display:flex;align-items:baseline;justify-content:space-between;margin:20px 2px 8px;scroll-margin-top:120px}
@@ -205,7 +206,7 @@ header.top.wide{padding-left:12px;padding-right:12px}
 <!-- /FL-LOADER -->
 
 <header class="top">
-  <img class="logo" alt="Forwardlog" src="">
+  <a class="logolink" id="logoHome" href="./" aria-label="Home" title="Home"><img class="logo" alt="Forwardlog" src=""></a>
   <div id="acct"></div>
   <div class="htitle"><span class="app">Presales</span><h1 id="title">Pipeline</h1><a class="hlink hidden" id="adminlink" href="admin.html">Admin</a></div>
 </header>
@@ -694,5 +695,7 @@ boot();
   if(mq.addEventListener) mq.addEventListener('change',sync);
   sync();
 })();
+
+$('#logoHome').addEventListener('click', function (e) { e.preventDefault(); if (location.hash) location.hash = ''; else showList(); window.scrollTo(0, 0); });
 </script>
 </body></html>
