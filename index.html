@@ -353,7 +353,9 @@ function stageName(n) { return S.cfg.stages[n]; }
 function loadCfg() { return S.cfg ? Promise.resolve(S.cfg) : api('getConfig').then(function (c) { S.cfg = c; if (c.isAdmin) $('#adminlink').classList.remove('hidden'); return c; }); }
 
 function boot() { loadLogo(); requireLogin().then(function () { return loadCfg(); }).then(route).catch(function (e) { toast(e.message, true); }); window.addEventListener('hashchange', route); }
-function route() { var m = /^#p=(.+)$/.exec(location.hash); if (m) showProject(decodeURIComponent(m[1])); else showList(); }
+var NAV_PREV = location.hash, NAV_FROMLIST = false;   // browser Back works through the #p= hash; in-page back steps back in history when we came from the list
+function route() { var m = /^#p=(.+)$/.exec(location.hash); NAV_FROMLIST = !!m && !/^#p=/.test(NAV_PREV); NAV_PREV = location.hash; if (m) showProject(decodeURIComponent(m[1])); else showList(); }
+function goList() { if (NAV_FROMLIST) history.back(); else location.hash = ''; }
 
 /* ================= LIST ================= */
 function showList() {
@@ -556,7 +558,7 @@ function renderProject() {
   $('#fabwrap').innerHTML = '<div class="actionbar noprint"><button class="btn" id="upd">Add update</button><button class="btn sec" id="mvb">Move stage</button>' +
     (p.stage < 6 ? '<button class="btn sec" id="holdb">' + (p.onHold ? 'Revive' : 'On hold') + '</button>' : '') + '</div>';
   var reload = function () { S.projects = []; showProject(p.id); };
-  $('#back').onclick = function () { location.hash = ''; };
+  $('#back').onclick = goList;
   $('#edit').onclick = function () { openEdit(p, reload); };
   $$('.stagebar button').forEach(function (bt) { bt.onclick = function () { var to = +bt.dataset.to; if (to === p.stage) { toast('Already at this stage'); return; } openMove(p, to, reload); }; });
   $$('.seg [data-step]').forEach(function (bt) { bt.onclick = function () { if (bt.dataset.step !== p.step) openStep(p, bt.dataset.step, reload); }; });
@@ -696,6 +698,6 @@ boot();
   sync();
 })();
 
-$('#logoHome').addEventListener('click', function (e) { e.preventDefault(); if (location.hash) location.hash = ''; else showList(); window.scrollTo(0, 0); });
+$('#logoHome').addEventListener('click', function (e) { e.preventDefault(); if (/^#p=/.test(location.hash)) goList(); else showList(); window.scrollTo(0, 0); });
 </script>
 </body></html>
