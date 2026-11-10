@@ -22,7 +22,7 @@ header.top .hlink{font-size:13px;font-weight:700;color:var(--brand-dk);text-deco
 header.top button{background:var(--brand-lt);color:var(--brand-dk);border:0;border-radius:10px;padding:7px 11px;font-weight:700;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 #acct{display:flex;align-items:center;gap:8px}
 #acct .av{width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
-#acct .who{line-height:1.15;text-align:right}#acct .who b{display:block;font-size:12.5px}#acct .who span{display:block;font-size:11px;color:var(--muted)} #acct button{margin-left:2px} header.top .htitle{min-height:33px;box-sizing:border-box} header.top .htitle .app{line-height:14.5px} header.top .htitle h1{line-height:21.75px} header.top .htitle .hlink{align-self:center} #n_client,#n_solution,#f_client,#f_solution{text-transform:uppercase}
+#acct .who{line-height:1.15;text-align:right}#acct .who b{display:block;font-size:12.5px}#acct .who span{display:block;font-size:11px;color:var(--muted)} #acct button{margin-left:2px} header.top .htitle{min-height:33px;box-sizing:border-box} header.top .htitle .app{line-height:14.5px} header.top .htitle h1{line-height:21.75px} header.top .htitle .hlink{align-self:center} #n_client,#n_solution,#f_client,#f_solution{text-transform:uppercase} .solpick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0 0 6px} .solbox{display:flex;align-items:center;gap:8px;margin:0;padding:9px 10px;border:1.5px solid #CBD3CB;border-radius:11px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;background:#fff} .solbox input{width:auto;margin:0;padding:0;accent-color:var(--brand)} .solbox:has(input:checked){border-color:var(--brand);background:var(--brand-lt)} .solother{text-transform:uppercase}
 @media (max-width:640px){#acct .who{display:none}}
 main{max-width:900px;margin:0 auto;padding:14px 12px 120px}
 footer.tag{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.4px;padding:4px 0 22px}footer.tag b{color:var(--brand)}
@@ -507,6 +507,17 @@ function showProject(id) {
   loadCfg().then(function () { return api('getProject', [id]); }).then(function (r) { capNames(r.project); S.cur = r; renderProject(); })
     .catch(function (e) { toast(e.message, true); location.hash = ''; });
 }
+var SOLS = ['AIRROB', 'TSORT', '3D SORTER', 'AUTOMATIC PUTWALL', 'WHEEL SORTER', '4-WAY SHUTTLE'];
+function solPicker(id, cur) {
+  var parts = String(cur || '').split(/\s*\+\s*/).map(function (s) { return s.trim().toUpperCase(); }).filter(Boolean);
+  var other = parts.filter(function (s) { return SOLS.indexOf(s) < 0; }).join(' + ');
+  return '<div class="solpick">' + SOLS.map(function (s) { return '<label class="solbox"><input type="checkbox" value="' + esc(s) + '"' + (parts.indexOf(s) >= 0 ? ' checked' : '') + '><span>' + esc(s) + '</span></label>'; }).join('') + '</div><input class="solother" placeholder="Other (type it in)" value="' + esc(other) + '"><input type="hidden" id="' + id + '" value="' + esc(parts.join(' + ')) + '">';
+}
+function wireSol(o, id) {
+  var other = o.querySelector('.solother'), hid = o.querySelector('#' + id);
+  function sync() { var v = Array.prototype.filter.call(o.querySelectorAll('.solpick input'), function (c) { return c.checked; }).map(function (c) { return c.value; }); var t = other.value.trim().toUpperCase(); if (t) v.push(t); hid.value = v.join(' + '); }
+  o.querySelector('.solpick').onchange = sync; other.oninput = sync; sync();
+}
 function capNames(p) { p.client = String(p.client || '').toUpperCase(); p.solution = String(p.solution || '').toUpperCase(); return p; }
 function fact(k, v) { return v ? '<dt>' + k + '</dt><dd>' + v + '</dd>' : ''; }
 function renderProject() {
@@ -627,23 +638,23 @@ function openUpdate(p, after) {
 function openEdit(p, after) {
   var c = S.cfg;
   var o = openSheet('<h3>Edit details</h3><div class="sub">Stage changes are done with Move stage, so they stay in the timeline.</div>' +
-    '<label>Client</label><input id="f_client" value="' + esc(p.client) + '"><label>Solution</label><input id="f_solution" value="' + esc(p.solution) + '"><label>Project ID</label><input id="f_projectId" value="' + esc(p.projectId) + '" placeholder="Leave blank for a lead">' +
+    '<label>Client</label><input id="f_client" value="' + esc(p.client) + '"><label>Solution</label>' + solPicker('f_solution', p.solution) + '<label>Project ID</label><input id="f_projectId" value="' + esc(p.projectId) + '" placeholder="Leave blank for a lead">' +
     '<div class="row"><div><label>Waiting on</label><select id="f_waitingOn">' + opts(c.waitingOn, p.waitingOn) + '</select></div><div><label>Priority</label><select id="f_priority"><option></option>' + opts(c.priority, p.priority) + '</select></div></div>' +
     '<div class="row"><div><label>Data status</label><select id="f_dataStatus"><option></option>' + opts(c.dataStatus, p.dataStatus) + '</select></div><div><label>Target date</label><input type="date" id="f_targetDate" value="' + esc(p.targetDate) + '"></div></div>' +
     '<label>Pending data / items</label><input id="f_pendingData" value="' + esc(p.pendingData) + '"><label>Design basis</label><input id="f_designBasis" value="' + esc(p.designBasis) + '">' +
     '<div class="row"><div><label>SE PIC</label><input id="f_sePic" value="' + esc(p.sePic) + '"></div><div><label>Sales PIC</label><input id="f_salesPic" value="' + esc(p.salesPic) + '"></div></div>' +
     '<label>Remarks</label><textarea id="f_remarks">' + esc(p.remarks) + '</textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Save details</button></div>');
-  submitBtn(o, 'Details', function () {
+  wireSol(o, 'f_solution'); submitBtn(o, 'Details', function () {
     var f = { id: p.id }; ['client', 'solution', 'projectId', 'waitingOn', 'priority', 'dataStatus', 'targetDate', 'pendingData', 'designBasis', 'sePic', 'salesPic', 'remarks'].forEach(function (k) { f[k] = $('#f_' + k, o).value; }); f.client = String(f.client).toUpperCase(); f.solution = String(f.solution).toUpperCase();
     return api('saveProject', [f]);
   }, after);
 }
 function openNew() {
   var c = S.cfg, step = 'Pending';
-  var o = openSheet('<h3>New project</h3><div class="sub">Add a project or lead. You can fill the rest later.</div><label>Client</label><input id="n_client" placeholder="Client name"><label>Solution</label><input id="n_solution" placeholder="e.g. Wheel sorter"><label>Project ID (optional)</label><input id="n_projectId" placeholder="Leave blank for a lead">' +
+  var o = openSheet('<h3>New project</h3><div class="sub">Add a project or lead. You can fill the rest later.</div><label>Client</label><input id="n_client" placeholder="Client name"><label>Solution</label>' + solPicker('n_solution', '') + '<label>Project ID (optional)</label><input id="n_projectId" placeholder="Leave blank for a lead">' +
     '<label>Starting stage</label><select id="n_stage">' + [1, 2, 3, 4, 5, 6].map(function (n) { return '<option value="' + n + '"' + (n === 1 ? ' selected' : '') + '>' + n + ' ' + esc(c.stages[n]) + '</option>'; }).join('') + '</select><div id="n_step"></div>' +
     '<div class="row"><div><label>Sales PIC</label><input id="n_salesPic"></div><div><label>Date</label><input type="date" id="n_date" value="' + todayIso() + '"></div></div><label>Note (optional)</label><textarea id="n_note"></textarea><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Add project</button></div>');
-  var sel = $('#n_stage', o);
+  wireSol(o, 'n_solution'); var sel = $('#n_stage', o);
   sel.onchange = function () {
     $('#n_step', o).innerHTML = +sel.value === 5 ? '<label>Proposal step</label><div class="seg"><button data-s="Pending" class="on">Pending to present</button><button data-s="Presented">Presented</button></div>' : '';
     step = 'Pending'; $$('#n_step button', o).forEach(function (b) { b.onclick = function () { step = b.dataset.s; $$('#n_step button', o).forEach(function (x) { x.classList.toggle('on', x === b); }); }; });
