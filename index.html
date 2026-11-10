@@ -295,7 +295,7 @@ function requireLogin() {
 }
 function signOut() {
   if (!confirm('Sign out of Presales Pipeline?')) return;
-  ls('pp_auth', null); _auth = null;
+  ls('pp_auth', null); ls(LIST_CACHE, null); _auth = null;
   loadGsi().then(function () { google.accounts.id.disableAutoSelect(); }).catch(function () { }).then(function () { location.reload(); });
 }
 function renderChip() {
@@ -352,7 +352,19 @@ var S = { projects: [], cfg: null, tab: 'plate', q: '', stageF: '', flagOnly: fa
 function stageName(n) { return S.cfg.stages[n]; }
 function loadCfg() { return S.cfg ? Promise.resolve(S.cfg) : api('getConfig').then(function (c) { S.cfg = c; if (c.isAdmin) $('#adminlink').classList.remove('hidden'); return c; }); }
 
-function boot() { loadLogo(); requireLogin().then(function () { return loadCfg(); }).then(route).catch(function (e) { toast(e.message, true); }); window.addEventListener('hashchange', route); }
+// Speed: the list request already returns the settings, so start-up skips the separate getConfig call,
+// and the last project list saved on this device is shown at once while the fresh one loads.
+var LIST_CACHE = 'pp_list_cache_v1';
+function seedFromCache(a) {
+  try {
+    var c = JSON.parse(ls(LIST_CACHE) || 'null');
+    if (!c || !a || c.email !== a.email || !c.config || !c.projects) return;
+    S.cfg = c.config; S.projects = c.projects.map(capNames);
+    if (c.config.isAdmin) $('#adminlink').classList.remove('hidden');
+  } catch (e) { }
+}
+function saveListCache(r) { try { ls(LIST_CACHE, JSON.stringify({ email: (_auth || readAuth() || {}).email, at: Date.now(), projects: r.projects, config: r.config })); } catch (e) { } }
+function boot() { loadLogo(); requireLogin().then(function (a) { seedFromCache(a); route(); }).catch(function (e) { toast(e.message, true); }); window.addEventListener('hashchange', route); }
 var NAV_PREV = location.hash, NAV_FROMLIST = false;   // browser Back works through the #p= hash; in-page back steps back in history when we came from the list
 function route() { var m = /^#p=(.+)$/.exec(location.hash); NAV_FROMLIST = !!m && !/^#p=/.test(NAV_PREV); NAV_PREV = location.hash; if (m) showProject(decodeURIComponent(m[1])); else showList(); }
 function goList() { if (NAV_FROMLIST) history.back(); else location.hash = ''; }
@@ -360,8 +372,17 @@ function goList() { if (NAV_FROMLIST) history.back(); else location.hash = ''; }
 /* ================= LIST ================= */
 function showList() {
   $('#title').textContent = 'Pipeline'; $('#fabwrap').innerHTML = '';
-  if (!S.projects.length) $('#main').innerHTML = '<div class="empty">Loading…</div>';
-  api('listProjects').then(function (r) { S.projects = r.projects.map(capNames); S.cfg = r.config; if (r.config.isAdmin) $('#adminlink').classList.remove('hidden'); renderList(); })
+  if (S.projects.length && S.cfg) renderList(); else $('#main').innerHTML = '<div class="empty">Loading…</div>';
+  api('listProjects').then(function (r) {
+    saveListCache(r);
+    S.projects = r.projects.map(capNames); S.cfg = r.config;
+    $('#adminlink').classList.toggle('hidden', !r.config.isAdmin);
+    if (!/^#p=/.test(location.hash) && !document.querySelector('.overlay')) {
+      var q = document.activeElement && document.activeElement.id === 'q' ? document.activeElement.selectionStart : null;
+      renderList();
+      if (q !== null && $('#q')) { $('#q').focus(); $('#q').setSelectionRange(q, q); }
+    }
+  })
     .catch(function (e) { $('#main').innerHTML = '<div class="empty">' + esc(e.message) + '</div>'; toast(e.message, true); });
 }
 function clockText(p) {
