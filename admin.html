@@ -90,6 +90,7 @@ td select[data-k=stage]{min-width:180px}
 tr.check td{background:var(--warn-bg)}
 @media print{header.top button,.noprint{display:none!important}body{background:#fff}.card{border:0;box-shadow:none}}
 header.top .htitle{min-height:33px;box-sizing:border-box} header.top .htitle .app{line-height:14.5px} header.top .htitle h1{line-height:21.75px} header.top .htitle .hlink{align-self:center} @media (max-width:560px){header.top .logo{height:46px;margin:-2px auto -2px 0}}
+header.top .logolink{display:block;flex:0 0 auto;margin-right:auto;line-height:0;cursor:pointer;border-radius:6px}header.top .logolink .logo{margin-left:0;margin-right:0}header.top .logolink:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 </style>
 </head><body>
 <script>window.FL_LOADER={"app":"Presales Pipeline","quiet":[],"messages":{"adminImport":"Importing projects…","saveProject":"Saving the project…","addUpdate":"Saving the update…","moveStage":"Moving the project…"}}</script>
@@ -184,7 +185,7 @@ header.top .htitle{min-height:33px;box-sizing:border-box} header.top .htitle .ap
 <!-- /FL-LOADER -->
 
 <header class="top">
-  <img class="logo" alt="Forwardlog" src="">
+  <a class="logolink" id="logoHome" href="./" aria-label="Home" title="Home"><img class="logo" alt="Forwardlog" src=""></a>
   <div id="acct"></div>
   <div class="htitle"><span class="app">Presales</span><h1>Admin</h1><a class="hlink" href="./">&larr; Pipeline</a></div>
 </header>
