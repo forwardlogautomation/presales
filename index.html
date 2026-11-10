@@ -375,7 +375,7 @@ function cardHtml(p) {
   if (p.solutionRev > 1) chips += '<span class="chip">v' + p.solutionRev + '</span>';
   chips += flagChips(p);
   var na = p.nextAction || p.statusNote || '';
-  return '<li class="pj w-' + waitClass(p) + '" data-id="' + esc(p.id) + '"><div class="main"><div class="t1"><b>' + esc(p.client) + '</b> <span class="muted">' + esc(p.solution) + (p.projectId ? ' \u00b7 #' + esc(p.projectId) : '') + '</span></div><div class="chips">' + chips + '</div><div class="clock">' + clockText(p) + '</div>' + (na ? '<div class="na">' + (p.nextAction ? 'Next: ' : '') + esc(na) + '</div>' : '') + '</div>' +
+  return '<li class="pj w-' + waitClass(p) + '" data-id="' + esc(p.id) + '"><div class="main"><div class="t1"><b>' + esc(p.client) + '</b> <span class="muted">' + esc(p.solution) + (p.projectId ? ' \u00b7 #' + esc(p.projectId) : '') + '</span></div><div class="chips">' + chips + '</div><div class="clock">' + [clockText(p), p.salesPic ? 'Sales: ' + esc(p.salesPic) : ''].filter(Boolean).join(' \u00b7 ') + '</div>' + (na ? '<div class="na">' + (p.nextAction ? 'Next: ' : '') + esc(na) + '</div>' : '') + '</div>' +
     (p.stage < 6 ? '<button class="btn sm sec mv" data-id="' + esc(p.id) + '">Move</button>' : '') + '</li>';
 }
 var FILTERS = [['me', 'My plate'], ['sales', 'Sales'], ['client', 'Client'], ['internal', 'Internal'], ['hold', 'On hold'], ['pending', 'Pending to present'], ['presented', 'Presented']];
@@ -454,7 +454,7 @@ function boardCard(p) {
   if (p.solutionRev > 1) chips += '<span class="chip">v' + p.solutionRev + '</span>';
   chips += flagChips(p);
   var na = p.nextAction || p.statusNote || '';
-  return '<div class="bc w-' + waitClass(p) + '" draggable="true" data-id="' + esc(p.id) + '"><b>' + esc(p.client) + '</b> <span class="muted">' + esc(p.solution) + '</span><div class="chips">' + chips + '</div><div class="clock">' + clockText(p) + '</div>' + (na ? '<div class="na">' + (p.nextAction ? 'Next: ' : '') + esc(na) + '</div>' : '') + '</div>';
+  return '<div class="bc w-' + waitClass(p) + '" draggable="true" data-id="' + esc(p.id) + '"><b>' + esc(p.client) + '</b> <span class="muted">' + esc(p.solution) + '</span><div class="chips">' + chips + '</div><div class="clock">' + [clockText(p), p.salesPic ? 'Sales: ' + esc(p.salesPic) : ''].filter(Boolean).join(' \u00b7 ') + '</div>' + (na ? '<div class="na">' + (p.nextAction ? 'Next: ' : '') + esc(na) + '</div>' : '') + '</div>';
 }
 function renderListBoard() {
   var q = S.q.trim().toLowerCase(), live = S.projects.filter(function (p) { return p.stage < 6; }), done = S.projects.filter(function (p) { return p.stage === 6; });
