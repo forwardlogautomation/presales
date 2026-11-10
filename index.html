@@ -655,4 +655,32 @@ function openNew() {
 }
 boot();
 </script>
+<style id="fab-inline-css">
+.tb-new{flex:0 0 auto;white-space:nowrap;padding:10px 16px;min-height:44px}
+@media (max-width:640px){.tb-new{display:none!important}}
+@media (min-width:641px){body.fab-inline #fabwrap .fab{display:none}}
+</style>
+<script id="fab-inline-js">
+(function(){
+  var mq=window.matchMedia('(min-width:641px)');
+  function sync(){
+    var orig=document.querySelector('#fabwrap #newbtn');
+    var tb=document.querySelector('#main .toolbar');
+    var clone=document.querySelector('.tb-new');
+    if(!orig||!tb){ if(clone) clone.remove(); document.body.classList.remove('fab-inline'); return; }
+    if(!clone||clone.parentNode!==tb){
+      if(clone) clone.remove();
+      clone=document.createElement('button');
+      clone.type='button'; clone.className='btn tb-new noprint';
+      clone.textContent=orig.textContent;
+      clone.onclick=function(){var o=document.querySelector('#fabwrap #newbtn'); if(o) o.click();};
+      var q=tb.querySelector('#q'); if(q) q.insertAdjacentElement('afterend',clone); else tb.appendChild(clone);
+    }
+    document.body.classList.toggle('fab-inline', mq.matches);
+  }
+  new MutationObserver(sync).observe(document.body,{childList:true,subtree:true});
+  if(mq.addEventListener) mq.addEventListener('change',sync);
+  sync();
+})();
+</script>
 </body></html>
