@@ -341,7 +341,7 @@ function waitChip(p) {
 }
 var FLAG_LABEL = { MOVE_HOLD: 'Move to On Hold?', REVIEW: 'Review: still worth keeping?', MISSING: 'Missing info' };
 function flagChips(p) {
-  return (p.flags || []).map(function (f) { return '<span class="chip ' + (f === 'REVIEW' ? 'bad' : f === 'MISSING' ? '' : 'warn') + '">' + FLAG_LABEL[f] + '</span>'; }).join('');
+  return (p.flags || []).map(function (f) { return '<span class="chip ' + (f === 'REVIEW' ? 'bad' : f === 'MISSING' ? '' : 'warn') + '">' + FLAG_LABEL[f] + '</span>'; }).join('') + (!p.nextAction && !p.onHold && p.stage < 6 ? '<span class="chip warn">No next step</span>' : '');
 }
 function ago(n) { return n === null || n === undefined ? '' : (n === 0 ? 'today' : n + 'd'); }
 function footerHtml() { return '<footer class="tag"><b>FORWARDLOG</b> \u00b7 Endless Flexibility In Automation</footer>'; }
@@ -527,7 +527,7 @@ function renderProject() {
     f += fact('Days in stage', p.daysInStage === null ? '' : p.daysInStage + (p.estimated ? ' (estimated date)' : ''));
     if (p.stage === 5) { f += fact('Days pending to present', p.daysPendingToPresent === null ? '' : String(p.daysPendingToPresent)); f += fact('Days since presented', p.daysSincePresented === null ? '' : String(p.daysSincePresented)); }
   }
-  f += fact('Status note', esc(p.statusNote)); f += fact('Next action', esc(p.nextAction) + (p.nextActionDue ? ' <span class="muted">(due ' + fmtDate(p.nextActionDue) + ')</span>' : ''));
+  f += fact('Status note', esc(p.statusNote)); f += fact('Next action', esc(p.nextAction));
   f += fact('Data status', esc(p.dataStatus)); f += fact('Pending data', esc(p.pendingData)); f += fact('Design basis', esc(p.designBasis));
   f += fact('Solution version', 'v' + p.solutionRev + (p.revisionReason ? ' \u00b7 ' + esc(p.revisionReason) : ''));
   f += fact('SE PIC', esc(p.sePic)); f += fact('Sales PIC', esc(p.salesPic)); f += fact('Priority', esc(p.priority)); f += fact('Target date', fmtDate(p.targetDate, true));
@@ -620,8 +620,8 @@ function openRevive(p, after) {
   submitBtn(o, 'Revive', function () { return api('setHold', [p.id, false, { date: $('#dt', o).value, note: $('#nt', o).value, rawNote: $('#nt', o).value }]); }, after);
 }
 function openUpdate(p, after) {
-  var o = openSheet('<h3>Add update</h3><div class="sub">' + esc(p.client) + ' \u00b7 ' + esc(p.solution) + '</div><label>What happened?</label><textarea id="nt" placeholder="Type it your way, short is fine"></textarea><label>Next action</label><input id="na" value="' + esc(p.nextAction) + '" placeholder="What is the next step?"><div class="row"><div><label>Next action due</label><input type="date" id="nd" value="' + esc(p.nextActionDue) + '"></div><div><label>Date of update</label><input type="date" id="dt" value="' + todayIso() + '"></div></div><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Save update</button></div>');
-  submitBtn(o, 'Update', function () { var n = $('#nt', o).value; return api('addUpdate', [p.id, { note: n, rawNote: n, nextAction: $('#na', o).value, nextActionDue: $('#nd', o).value, date: $('#dt', o).value }]); }, after);
+  var o = openSheet('<h3>Add update</h3><div class="sub">' + esc(p.client) + ' \u00b7 ' + esc(p.solution) + '</div><label>What happened?</label><textarea id="nt" placeholder="Type it your way, short is fine"></textarea><label>Next action</label><input id="na" value="' + esc(p.nextAction) + '" placeholder="Who does what next, e.g. Nic: send SKU master"><label>Date of update</label><input type="date" id="dt" value="' + todayIso() + '"><div class="btns"><button class="btn sec" id="cx">Cancel</button><button class="btn" id="go">Save update</button></div>');
+  submitBtn(o, 'Update', function () { var n = $('#nt', o).value, nx = $('#na', o).value.trim(); if (!nx && !p.onHold && p.stage < 6) throw new Error('Add the next action: who does what next'); return api('addUpdate', [p.id, { note: n, rawNote: n, nextAction: nx, date: $('#dt', o).value }]); }, after);
 }
 function openEdit(p, after) {
   var c = S.cfg;
