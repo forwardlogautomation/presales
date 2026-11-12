@@ -3,12 +3,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5F7A61">
-<title>Presales Pipeline · Forwardlog</title>
-<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAYFBMVEVPbVGaq520wrfb4txVVVVNbFB/loP////8/PxqhGxVc1prd22tuq9lZWUAAADP1tBbW1tcemGHmoro7OhObVOLi4tMaUzCzMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjtjjKAAAAGHRSTlOi////A33/Af7+//7//wD/////////Rv+bcddjAAAA9ElEQVR42qWTy3LDIAxFBU5SJPEIj5j//9PK0GaaGRkvehZ4wRksaXQhxrgDqsAul3CLgL06hdoR4g0ieHeKkesd3QLcAdJKSADsljDgWsAplNekuFRKV4TwnATnW/OKwCGwENhZIl3gn1n5U8FdCCENFsLB87UQRhcrwXjvTf9HkX8EeyEwlppMKfZz1OFXaJmSIaFh0l6wmbtvcydpewufS0I45m5a0QX5wUM+nXKuqlCIm3EbZaZ0JmQ+2mEpQhPsEI4T9RocEhM+MstuVdTWPpHUR/loQtZeC85WMhH6GZwIRstl2kbH94vw3r8kvBfx/wZi1iWWldh1rgAAAABJRU5ErkJggg==">
-<link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAYFBMVEWWoJdohGxmdGjT29RdeWBge2O3w7gA/wB+lYJfe2G/ysFkgGY5cjlVqlX/AP/////+/v5XdFpiemTW3NZdemJmZmYAAABcXFwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtULo7AAAAGHRSTlP+/hX/0pr/Af9E/7cEAwEB//7+////AP+l/WZQAAAB+0lEQVR42u2X25LCMAiGyaG11sMGEuv7v+lCEttudXeS9GK98HccDyNfgSAFmFgHPU26s1Qs27HFRUwn4Cd/OFrCGgU6HfnCCaD56goRwBcL+PeKvdAC4BerELyrkgdUVghw0GLfu2r1QtAH0BP7b1yDDEcxaZiOTdfPPnAI2iK4RgF2GjShbwV4JA1duwPRBbD7ABZ2RBBjeCsAPEmqRV77MsDtvtGNvxwsog1lALptRDHPREHtA4Q6wCaEagBtklgLuMNTrX0A1aew7u1uXx3c7r4JsNI/AVal7PeWsvlU4lsBcmc2nt/4BkBAq7wbhxDnI7UwSgGEAzd4Ga1EjIE//o3PACJUzpD09ySKwJc3lhceWBnqjGP7kIfEwI/sw6tb2xbAGnr2n8KPMTERim+uBtnrVatRHIipAbADtBrlJDHRhVKAibmbCfFkUFUAPKYDSIQxfSJTDkjVxKeZ4k5nKXZ1gJR6owK1AuK/6hFOFcC/AISaJDoVtoC6Y1xiMFJTCdDXAGa/EUZcIhBa4ag7u5DNc13KqNv93rA2xZwsw5IByU1XPO4DZuMgLQWWcf9aOu9DiC2Jo0A1ztP+lbe20pXHgKLYEvvZKVl5zjVLl8ljx7J0XdrXPshrH++v7Yvn16Ft9TVp9T3L8vxYvk87lu+EqF//dTT9Bqhb++c3Oa4OAAAAAElFTkSuQmCC">
-<link rel="apple-touch-icon" href="data:image/png;base64,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">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<title>Pipeline · Presales · Forwardlog</title>
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="icon-64.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>:root{--brand:#5F7A61;--brand-dk:#475C4A;--brand-lt:#E9F0E9;--brand-ink:#fff;--bg:#F3F5F2;--card:#fff;--ink:#262A27;--grey:#6B6B6B;--muted:#7A807B;--line:#E2E7E2;--ok:#2E7D4F;--ok-bg:#E2F3E8;--bad:#C0392B;--bad-bg:#FBE4E1;--warn:#B7791F;--warn-bg:#FDF1DC;--info:#2A5D9F;--info-bg:#E7F1FB;--radius:14px;--shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(40,60,45,.06)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
@@ -115,7 +114,7 @@ header.top.wide{padding-left:12px;padding-right:12px}
 @media (max-width:700px){.board{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(84vw,340px);scroll-snap-type:x mandatory;margin:0 -12px;padding:0 12px 12px;scroll-padding:0 12px}.bcol{scroll-snap-align:start}}</style>
 </head><body>
 <script>window.FL_LOADER={"app":"Presales Pipeline","quiet":[],"messages":{"adminImport":"Importing projects…","saveProject":"Saving the project…","addUpdate":"Saving the update…","moveStage":"Moving the project…"}}</script>
-<!-- FL-LOADER v1: Forwardlog loading signs (splash, top bar, button spinner, long-job card). Paste right after <body>. -->
+<!-- FL-LOADER v2: Forwardlog loading signs (splash, top bar, button spinner, long-job card). Paste right after <body>. -->
 <style id="fl-loader-css">
 #fl-splash{position:fixed;inset:0;z-index:9999;background:#F3F5F2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .3s ease}
 #fl-splash.fl-hide{opacity:0;pointer-events:none}
@@ -146,19 +145,29 @@ header.top.wide{padding-left:12px;padding-right:12px}
 <div id="fl-bar" aria-hidden="true"><i></i></div>
 <div id="fl-wait" role="status" aria-live="polite"><div class="fl-card"><div class="fl-ring"></div><div class="fl-msg">Working…</div><small>Please keep this page open.</small></div></div>
 <script>
-/* FL-LOADER v1. Settings per portal go in window.FL_LOADER before this script:
-   { app:'SortCheck', quiet:['poll','sync',...], messages:{fn:'Saving…'}, waitAfter:1500 } */
+/* FL-LOADER v2. Settings per portal go in window.FL_LOADER before this script:
+   { app:'SortCheck', quiet:['poll','sync',...], messages:{fn:'Saving…'}, waitAfter:1500, splashMin:1100, logo:'/logo.png' }
+   v2: the logo is the shared file /logo.png (no Apps Script call, cached by the browser for every portal),
+   and the splash always stays at least splashMin ms so every portal opens the same way. */
 (function () {
   var C = window.FL_LOADER || {}, quiet = ['getLogo', 'logClientError'].concat(C.quiet || []), msgs = C.messages || {};
   var waitAfter = C.waitAfter || 1500, slow = 0, pending = 0, started = 0, lastBtn = null, lastBtnAt = 0, busyBtns = [], waitTimer = null;
   var $ = function (id) { return document.getElementById(id); };
   var splash = $('fl-splash'), bar = $('fl-bar'), wait = $('fl-wait');
   if (C.app) splash.querySelector('.fl-app').textContent = C.app;
-  // show the cached logo on the splash, if the page has one stored
-  try { var lg = (C.logoKeys || ['sc_logo', 'fl_logo', 'logo', 'pp_logo']).map(function (k) { var v = localStorage.getItem(k); if (v && v.charAt(0) === '"') v = JSON.parse(v); return v; }).filter(function (v) { return v && v.indexOf('data:image') === 0; })[0];
-    if (lg) { var im = new Image(); im.className = 'fl-mark'; im.alt = 'Forwardlog'; im.src = lg; var w = splash.querySelector('.fl-word'); w.parentNode.replaceChild(im, w); } } catch (e) {}
-  var splashGone = false, loadedAt = 0;
-  function hideSplash() { if (splashGone) return; splashGone = true; splash.classList.add('fl-hide'); setTimeout(function () { splash.style.display = 'none'; }, 350); }
+  // the shared logo file (falls back to the FORWARDLOG word if it cannot load)
+  try { var im = new Image(); im.className = 'fl-mark'; im.alt = 'Forwardlog';
+    im.onload = function () { var w = splash.querySelector('.fl-word'); if (w) w.parentNode.replaceChild(im, w); };
+    im.src = C.logo || '/logo.png'; } catch (e) {}
+  // logo copies the v1 portals kept in localStorage are no longer used
+  try { ['fl_logo', 'pp_logo', 'sc_logo', 'slc_logo'].forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
+  var splashGone = false, loadedAt = 0, splashMin = C.splashMin == null ? 1100 : C.splashMin;
+  function hideSplash() {
+    if (splashGone) return;
+    var left = splashMin - (window.performance ? performance.now() : splashMin);
+    if (left > 0) { setTimeout(hideSplash, left); return; }
+    splashGone = true; splash.classList.add('fl-hide'); setTimeout(function () { splash.style.display = 'none'; }, 350);
+  }
   setTimeout(hideSplash, C.splashMax || 9000);                    // never block the page for long
   window.addEventListener('load', function () { loadedAt = Date.now(); setTimeout(function () { if (!started) hideSplash(); }, 900); });
   // remember the last button / link pressed, so its own spinner can show
@@ -206,7 +215,7 @@ header.top.wide{padding-left:12px;padding-right:12px}
 <!-- /FL-LOADER -->
 
 <header class="top">
-  <a class="logolink" id="logoHome" href="./" aria-label="Home" title="Home"><img class="logo" alt="Forwardlog" src=""></a>
+  <a class="logolink" id="logoHome" href="./" aria-label="Home" title="Home"><img class="logo" alt="Forwardlog" src="/logo.png"></a>
   <div id="acct"></div>
   <div class="htitle"><a class="flhub" href="https://forwardlogautomation.github.io/" title="All Forwardlog portals" style="font-size:11px;font-weight:700;letter-spacing:.3px;color:#5F7A61;text-decoration:none;white-space:nowrap;margin-right:8px">&#8962; All portals</a><span class="app">Presales</span><h1 id="title">Pipeline</h1><a class="hlink hidden" id="adminlink" href="admin.html">Admin</a></div>
 </header>
@@ -229,21 +238,11 @@ function toast(msg, err) {
   setTimeout(function () { t.remove(); }, err ? 4500 : 2200);
 }
 
-/* ---- logo (served by the API, cached) ---- */
-function loadLogo() {
-  var imgs = $$('img.logo, #wall img'), c = ls('pp_logo');
-  function set(u) { imgs.forEach(function (i) { i.src = u; }); }
-  if (c) set(c);
-  fetch(API_URL, { method: 'POST', body: JSON.stringify({ fn: 'getLogo', args: [] }), redirect: 'follow', credentials: 'omit' })
-    .then(function (r) { return r.json(); })
-    .then(function (j) { if (j && j.ok && j.result) { ls('pp_logo', j.result); set(j.result); } })
-    .catch(function () { });
-}
-
 /* ---- Google sign-in ---- */
 var _auth = null, _gsi = null, _waiters = [], _renew = null;
+ls('pp_auth', null);   // old per-portal sign-in key; the sign-in is now shared by all portals in 'fl_auth'
 function readAuth() {
-  try { var a = JSON.parse(ls('pp_auth') || 'null'); if (a && a.token && a.exp - Date.now() > 60000) return a; } catch (e) { }
+  try { var a = JSON.parse(ls('fl_auth') || 'null'); if (a && a.token && a.exp - Date.now() > 60000) return a; } catch (e) { }
   return null;
 }
 function loadGsi() {
@@ -267,7 +266,7 @@ function onCredential(resp) {
     var p = decodeJwt(resp.credential);
     if (p.hd !== HD) { toast('Please sign in with your @' + HD + ' account', true); return; }
     _auth = { token: resp.credential, exp: p.exp * 1000, name: p.name || p.email, email: p.email, picture: p.picture || '' };
-    ls('pp_auth', JSON.stringify(_auth));
+    ls('fl_auth', JSON.stringify(_auth));
     var w = $('#wall'); if (w) w.remove();
     scheduleRenew(); renderChip();
     var q = _waiters; _waiters = []; q.forEach(function (f) { f(_auth); });
@@ -281,7 +280,7 @@ function scheduleRenew() {
 function showWall() {
   if ($('#wall')) return;
   var d = document.createElement('div'); d.id = 'wall';
-  d.innerHTML = '<div class="box"><img alt="Forwardlog" src="' + esc(ls('pp_logo') || '') + '"><h2>Presales Pipeline</h2><p>Sign in with your @' + HD + ' Google account to continue.</p><div id="gbtn"></div><p id="wallerr" class="muted" style="margin:12px 0 0"></p></div>';
+  d.innerHTML = '<div class="box"><img alt="Forwardlog" src="/logo.png"><h2>Presales Pipeline</h2><p>Sign in with your @' + HD + ' Google account to continue.</p><div id="gbtn"></div><p id="wallerr" class="muted" style="margin:12px 0 0"></p></div>';
   document.body.appendChild(d);
   loadGsi().then(function () {
     google.accounts.id.renderButton($('#gbtn'), { theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', width: 260 });
@@ -295,7 +294,7 @@ function requireLogin() {
 }
 function signOut() {
   if (!confirm('Sign out of Presales Pipeline?')) return;
-  ls('pp_auth', null); ls(LIST_CACHE, null); _auth = null;
+  ls('fl_auth', null); ls(LIST_CACHE, null); _auth = null;
   loadGsi().then(function () { google.accounts.id.disableAutoSelect(); }).catch(function () { }).then(function () { location.reload(); });
 }
 function renderChip() {
@@ -313,7 +312,7 @@ function api(fn, args) {
     .then(function (r) { return r.json(); })
     .then(function (j) {
       if (j.ok) return j.result;
-      if (j.error === 'LOGIN_REQUIRED') { ls('pp_auth', null); _auth = null; return requireLogin().then(function () { return api(fn, args); }); }
+      if (j.error === 'LOGIN_REQUIRED') { ls('fl_auth', null); _auth = null; return requireLogin().then(function () { return api(fn, args); }); }
       throw new Error(j.error || 'Request failed');
     });
 }
@@ -364,7 +363,7 @@ function seedFromCache(a) {
   } catch (e) { }
 }
 function saveListCache(r) { try { ls(LIST_CACHE, JSON.stringify({ email: (_auth || readAuth() || {}).email, at: Date.now(), projects: r.projects, config: r.config })); } catch (e) { } }
-function boot() { loadLogo(); requireLogin().then(function (a) { seedFromCache(a); route(); }).catch(function (e) { toast(e.message, true); }); window.addEventListener('hashchange', route); }
+function boot() { requireLogin().then(function (a) { seedFromCache(a); route(); }).catch(function (e) { toast(e.message, true); }); window.addEventListener('hashchange', route); }
 var NAV_PREV = location.hash, NAV_FROMLIST = false;   // browser Back works through the #p= hash; in-page back steps back in history when we came from the list
 function route() { var m = /^#p=(.+)$/.exec(location.hash); NAV_FROMLIST = !!m && !/^#p=/.test(NAV_PREV); NAV_PREV = location.hash; if (m) showProject(decodeURIComponent(m[1])); else showList(); }
 function goList() { if (NAV_FROMLIST) history.back(); else location.hash = ''; }
